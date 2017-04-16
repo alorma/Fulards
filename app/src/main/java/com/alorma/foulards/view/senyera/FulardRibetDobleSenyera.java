@@ -13,13 +13,12 @@ import android.util.AttributeSet;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
-public class FulardRibetDobleSenyera extends Fulard {
+public class FulardRibetDobleSenyera extends FulardSenyera {
   private Paint paintFulard;
   private Rect rect;
   private Path path;
   private Paint paintRibetExtern;
   private int ribet;
-  private Paint paintRibetIntern;
 
   public FulardRibetDobleSenyera(Context context) {
     super(context);
@@ -40,6 +39,7 @@ public class FulardRibetDobleSenyera extends Fulard {
 
   @Override
   protected void init(boolean inEditMode) {
+    super.init(inEditMode);
     paintFulard = new Paint();
     paintFulard.setAntiAlias(true);
     paintFulard.setStyle(Paint.Style.FILL);
@@ -50,11 +50,6 @@ public class FulardRibetDobleSenyera extends Fulard {
     paintRibetExtern.setStyle(Paint.Style.FILL);
     int colorRibetExtern = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
     paintRibetExtern.setColor(colorRibetExtern);
-
-    paintRibetIntern = new Paint();
-    paintRibetIntern.setStyle(Paint.Style.FILL);
-    int colorRibetIntern = ContextCompat.getColor(getContext(), R.color.fulard_senyera);
-    paintRibetIntern.setColor(colorRibetIntern);
 
     rect = new Rect();
     path = new Path();
@@ -81,7 +76,7 @@ public class FulardRibetDobleSenyera extends Fulard {
     path.lineTo(rect.right - ribet, rect.bottom - ribet);
     path.lineTo(rect.left + ribet, rect.bottom - ribet);
     path.close();
-    canvas.drawPath(path, paintRibetIntern);
+    canvas.drawPath(path, paintSenyera);
 
     path.reset();
 

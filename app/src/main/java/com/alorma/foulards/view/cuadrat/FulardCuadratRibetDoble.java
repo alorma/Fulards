@@ -58,7 +58,7 @@ public class FulardCuadratRibetDoble extends Fulard {
 
     rect = new Rect();
 
-    ribet = getResources().getDimensionPixelOffset(R.dimen.ribet_simple);
+    ribet = getResources().getDimensionPixelOffset(R.dimen.ribet_doble);
   }
 
   @Override

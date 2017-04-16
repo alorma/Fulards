@@ -31,4 +31,9 @@ public abstract class Fulard extends View {
   }
 
   protected abstract void init(boolean inEditMode);
+
+  @Override
+  public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+  }
 }

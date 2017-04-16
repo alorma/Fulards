@@ -11,13 +11,11 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.R;
-import com.alorma.foulards.view.Fulard;
 
-public class FulardRibetSenyera extends Fulard {
+public class FulardRibetSenyera extends FulardSenyera {
   private Paint paint;
   private Rect rect;
   private Path path;
-  private Paint paintRibet;
   private int ribet;
 
   public FulardRibetSenyera(Context context) {
@@ -39,16 +37,17 @@ public class FulardRibetSenyera extends Fulard {
 
   @Override
   protected void init(boolean inEditMode) {
+    super.init(inEditMode);
     paint = new Paint();
     paint.setAntiAlias(true);
     paint.setStyle(Paint.Style.FILL);
     int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
     paint.setColor(color);
 
-    paintRibet = new Paint();
-    paintRibet.setStyle(Paint.Style.FILL);
+    paintSenyera = new Paint();
+    paintSenyera.setStyle(Paint.Style.FILL);
     int colorRibet = ContextCompat.getColor(getContext(), R.color.fulard_senyera);
-    paintRibet.setColor(colorRibet);
+    paintSenyera.setColor(colorRibet);
 
     rect = new Rect();
     path = new Path();
@@ -65,7 +64,7 @@ public class FulardRibetSenyera extends Fulard {
     path.lineTo(rect.right, rect.bottom);
     path.lineTo(rect.left, rect.bottom);
     path.close();
-    canvas.drawPath(path, paintRibet);
+    canvas.drawPath(path, paintSenyera);
 
     path.reset();
 

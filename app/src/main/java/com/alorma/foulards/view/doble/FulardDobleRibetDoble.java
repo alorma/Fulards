@@ -13,13 +13,11 @@ import android.util.AttributeSet;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
-public class FulardDobleRibetDoble extends Fulard {
-  private Paint paintFulardEsquerra;
+public class FulardDobleRibetDoble extends FulardDoble {
   private Rect rect;
   private Path path;
   private Paint paintRibetEsquerra;
   private int ribet;
-  private Paint paintFulardDreta;
   private Paint paintRibetDreta;
 
   public FulardDobleRibetDoble(Context context) {
@@ -41,18 +39,7 @@ public class FulardDobleRibetDoble extends Fulard {
 
   @Override
   protected void init(boolean inEditMode) {
-    paintFulardEsquerra = new Paint();
-    paintFulardEsquerra.setAntiAlias(true);
-    paintFulardEsquerra.setStyle(Paint.Style.FILL);
-    int colorFulardEsquerra = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintFulardEsquerra.setColor(colorFulardEsquerra);
-
-    paintFulardDreta = new Paint();
-    paintFulardDreta.setAntiAlias(true);
-    paintFulardDreta.setStyle(Paint.Style.FILL);
-    int colorFulardDreta = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintFulardDreta.setColor(colorFulardDreta);
-
+    super.init(inEditMode);
     paintRibetEsquerra = new Paint();
     paintRibetEsquerra.setStyle(Paint.Style.FILL);
     int colorRibetEsquerra = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);

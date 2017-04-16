@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
-public class FulardSimpleRibetDoble extends Fulard {
+public class FulardSimpleRibetDoble extends FulardDoble {
   private Rect rect;
   private Path path;
   private Paint paintRibetEsquerra;
@@ -40,6 +40,7 @@ public class FulardSimpleRibetDoble extends Fulard {
 
   @Override
   protected void init(boolean inEditMode) {
+    super.init(inEditMode);
     paint = new Paint();
     paint.setAntiAlias(true);
     paint.setStyle(Paint.Style.FILL);
