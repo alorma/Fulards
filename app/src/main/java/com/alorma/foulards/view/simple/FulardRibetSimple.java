@@ -1,4 +1,4 @@
-package com.alorma.foulards.view;
+package com.alorma.foulards.view.simple;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,26 +11,29 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.R;
+import com.alorma.foulards.view.Fulard;
 
-public class FulardSimple extends Fulard {
+public class FulardRibetSimple extends Fulard {
   private Paint paint;
   private Rect rect;
   private Path path;
+  private Paint paintRibet;
+  private int ribet;
 
-  public FulardSimple(Context context) {
+  public FulardRibetSimple(Context context) {
     super(context);
   }
 
-  public FulardSimple(Context context, @Nullable AttributeSet attrs) {
+  public FulardRibetSimple(Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public FulardSimple(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+  public FulardRibetSimple(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  public FulardSimple(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+  public FulardRibetSimple(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
   }
 
@@ -42,9 +45,14 @@ public class FulardSimple extends Fulard {
     int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_dark);
     paint.setColor(color);
 
-    rect = new Rect();
+    paintRibet = new Paint();
+    paintRibet.setStyle(Paint.Style.FILL);
+    int colorRibet = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
+    paintRibet.setColor(colorRibet);
 
+    rect = new Rect();
     path = new Path();
+    ribet = getResources().getDimensionPixelOffset(R.dimen.ribet_simple);
   }
 
   @Override
@@ -52,11 +60,21 @@ public class FulardSimple extends Fulard {
     super.onDraw(canvas);
     canvas.getClipBounds(rect);
 
+    // Ribet
     path.moveTo(rect.right, 0);
     path.lineTo(rect.right, rect.bottom);
     path.lineTo(rect.left, rect.bottom);
     path.close();
+    canvas.drawPath(path, paintRibet);
 
+    path.reset();
+
+    // Foulard
+    path.moveTo(rect.right - ribet, ribet);
+    path.lineTo(rect.right - ribet, rect.bottom - ribet);
+    path.lineTo(rect.left + ribet, rect.bottom - ribet);
+    path.close();
     canvas.drawPath(path, paint);
+    path.reset();
   }
 }

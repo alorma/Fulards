@@ -1,4 +1,4 @@
-package com.alorma.foulards.view;
+package com.alorma.foulards.view.simple;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.R;
+import com.alorma.foulards.view.Fulard;
 
 public class FulardRibetDoble extends Fulard {
   private Paint paintFulard;
@@ -90,5 +91,6 @@ public class FulardRibetDoble extends Fulard {
     path.lineTo(rect.left + (ribet * 2), rect.bottom - (ribet * 2));
     path.close();
     canvas.drawPath(path, paintFulard);
+    path.reset();
   }
 }
