@@ -1,4 +1,4 @@
-package com.alorma.foulards.view.simple;
+package com.alorma.foulards.view.doble;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,27 +13,28 @@ import android.util.AttributeSet;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
-public class FulardRibetSimple extends Fulard {
-  private Paint paint;
+public class FulardSimpleRibetDoble extends Fulard {
   private Rect rect;
   private Path path;
-  private Paint paintRibet;
+  private Paint paintRibetEsquerra;
   private int ribet;
+  private Paint paintRibetDreta;
+  private Paint paint;
 
-  public FulardRibetSimple(Context context) {
+  public FulardSimpleRibetDoble(Context context) {
     super(context);
   }
 
-  public FulardRibetSimple(Context context, @Nullable AttributeSet attrs) {
+  public FulardSimpleRibetDoble(Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public FulardRibetSimple(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+  public FulardSimpleRibetDoble(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  public FulardRibetSimple(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+  public FulardSimpleRibetDoble(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
   }
 
@@ -45,10 +46,15 @@ public class FulardRibetSimple extends Fulard {
     int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
     paint.setColor(color);
 
-    paintRibet = new Paint();
-    paintRibet.setStyle(Paint.Style.FILL);
-    int colorRibet = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintRibet.setColor(colorRibet);
+    paintRibetEsquerra = new Paint();
+    paintRibetEsquerra.setStyle(Paint.Style.FILL);
+    int colorRibetEsquerra = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
+    paintRibetEsquerra.setColor(colorRibetEsquerra);
+
+    paintRibetDreta = new Paint();
+    paintRibetDreta.setStyle(Paint.Style.FILL);
+    int colorRibetDreta = ContextCompat.getColor(getContext(), R.color.grey_fulard_dark);
+    paintRibetDreta.setColor(colorRibetDreta);
 
     rect = new Rect();
     path = new Path();
@@ -60,16 +66,23 @@ public class FulardRibetSimple extends Fulard {
     super.onDraw(canvas);
     canvas.getClipBounds(rect);
 
-    // Ribet
+    // Ribet1
     path.moveTo(rect.right, 0);
     path.lineTo(rect.right, rect.bottom);
-    path.lineTo(rect.left, rect.bottom);
+    path.lineTo(rect.centerX(), rect.centerY());
     path.close();
-    canvas.drawPath(path, paintRibet);
-
+    canvas.drawPath(path, paintRibetEsquerra);
     path.reset();
 
-    // Foulard
+    // Ribet2
+    path.moveTo(rect.left, rect.bottom);
+    path.lineTo(rect.right, rect.bottom);
+    path.lineTo(rect.centerX(), rect.centerY());
+    path.close();
+    canvas.drawPath(path, paintRibetDreta);
+    path.reset();
+
+    // Fulard
     path.moveTo(rect.right - ribet, ribet);
     path.lineTo(rect.right - ribet, rect.bottom - ribet);
     path.lineTo(rect.left + ribet, rect.bottom - ribet);

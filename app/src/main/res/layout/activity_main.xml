@@ -7,7 +7,7 @@
     tools:context="com.alorma.foulards.MainActivity"
     >
 
-  <com.alorma.foulards.view.doble.FulardRibetSimple
+  <com.alorma.foulards.view.doble.FulardDobleSenseRibet
       android:layout_width="300dp"
       android:layout_height="300dp"
       android:layout_gravity="center"

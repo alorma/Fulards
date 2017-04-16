@@ -43,12 +43,12 @@ public class FulardRibetDoble extends Fulard {
     paintFulard = new Paint();
     paintFulard.setAntiAlias(true);
     paintFulard.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_dark);
+    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
     paintFulard.setColor(color);
 
     paintRibetExtern = new Paint();
     paintRibetExtern.setStyle(Paint.Style.FILL);
-    int colorRibetExtern = ContextCompat.getColor(getContext(), R.color.grey_fulard_dark);
+    int colorRibetExtern = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
     paintRibetExtern.setColor(colorRibetExtern);
 
     paintRibetIntern = new Paint();

@@ -40,7 +40,7 @@ public class FulardSimple extends Fulard {
     paint = new Paint();
     paint.setAntiAlias(true);
     paint.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_dark);
+    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
     paint.setColor(color);
 
     rect = new Rect();
