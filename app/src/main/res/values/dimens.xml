@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="ribet_simple">16dp</dimen>
+  <dimen name="ribet_doble">8dp</dimen>
+  <dimen name="ribet_tripe">6dp</dimen>
+  <dimen name="ribet_cuatre">6dp</dimen>
+</resources>
