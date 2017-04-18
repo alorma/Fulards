@@ -1,11 +1,18 @@
 package com.alorma.foulards;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import butterknife.ButterKnife;
+import com.alorma.foulards.fragment.fulard.FoulardShapeSenyeraFragment;
+import com.alorma.foulards.fragment.fulard.FoulardShapeSquareFragment;
+import com.alorma.foulards.fragment.fulard.FoulardShapeTriangleDobleFragment;
+import com.alorma.foulards.fragment.fulard.FoulardShapeTriangleSimpleFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,9 +21,22 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    View buttonsColor = findViewById(R.id.buttonColors);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
+    configTabs();
+    onShapeSelected(FoulardsShape.TRIANGLE_SIMPLE);
+
+    buttonsColor.setOnClickListener(v -> showColors());
+  }
+
+  private void showColors() {
+    Intent intent = new Intent(this, ColorsActivity.class);
+    startActivity(intent);
+  }
+
+  private void configTabs() {
     TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
     tabLayout.addTab(tabLayout.newTab().setText("Simple").setTag(FoulardsShape.TRIANGLE_SIMPLE), true);
     tabLayout.addTab(tabLayout.newTab().setText("Doble").setTag(FoulardsShape.TRIANGLE_DOBLE), false);
@@ -41,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
       }
     });
-
-    onShapeSelected(FoulardsShape.TRIANGLE_SIMPLE);
   }
 
   private void onShapeSelected(FoulardsShape shape) {

@@ -18,6 +18,16 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:id="@+id/toolbar"
+        android:titleTextColor="@color/white"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?selectableItemBackground"
+        android:id="@+id/buttonColors"
+        android:text="COLORS"
+        android:textColor="@color/white"
         />
 
     <android.support.design.widget.TabLayout
