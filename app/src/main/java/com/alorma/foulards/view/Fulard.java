@@ -39,4 +39,8 @@ public abstract class Fulard extends View {
   }
 
   public abstract FulardType getFulardType();
+
+  public void fill(FulardCustomization customization) {
+
+  }
 }

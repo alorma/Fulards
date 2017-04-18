@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardRibetSimple extends Fulard {
   private Paint paint;
@@ -82,5 +83,15 @@ public class FulardRibetSimple extends Fulard {
     path.close();
     canvas.drawPath(path, paint);
     path.reset();
+  }
+
+  @Override
+  public void fill(FulardCustomization customization) {
+    if (customization.getFulardColor() != 0) {
+      paint.setColor(customization.getFulardColor());
+    }
+    if (customization.getRibetColor() != 0) {
+      paintRibet.setColor(customization.getRibetColor());
+    }
   }
 }

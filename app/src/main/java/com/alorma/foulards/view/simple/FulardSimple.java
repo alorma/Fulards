@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardSimple extends Fulard {
   private Paint paint;
@@ -41,7 +42,7 @@ public class FulardSimple extends Fulard {
     paint = new Paint();
     paint.setAntiAlias(true);
     paint.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
+    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
     paint.setColor(color);
 
     rect = new Rect();
@@ -65,5 +66,13 @@ public class FulardSimple extends Fulard {
     path.close();
     canvas.drawPath(path, paint);
     path.reset();
+  }
+
+  @Override
+  public void fill(FulardCustomization customization) {
+    if (customization.getFulardColor() != 0) {
+      paint.setColor(customization.getFulardColor());
+    }
+    invalidate();
   }
 }

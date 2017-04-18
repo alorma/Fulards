@@ -21,12 +21,14 @@
           android:orientation="horizontal"
           >
         <com.alorma.foulards.view.simple.FulardSimple
+            android:id="@+id/fulardSimple"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="8dp"
             />
         <com.alorma.foulards.view.simple.FulardRibetSimple
+            android:id="@+id/fulardSimpleAmbRibet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -39,12 +41,14 @@
           android:orientation="horizontal"
           >
         <com.alorma.foulards.view.simple.FulardRibetDoble
+            android:id="@+id/fulardSimpleAmbRibetDoble"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="8dp"
             />
         <com.alorma.foulards.view.simple.FulardRibetTriple
+            android:id="@+id/fulardSimpleAmbRibetTripe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -57,6 +61,7 @@
           android:orientation="horizontal"
           >
         <com.alorma.foulards.view.simple.FulardRibetCuatre
+            android:id="@+id/fulardSimpleAmbRibetCuatre"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

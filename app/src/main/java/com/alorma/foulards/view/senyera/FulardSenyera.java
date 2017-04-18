@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
-public class FulardSenyera extends Fulard {
+public abstract class FulardSenyera extends Fulard {
   protected Paint paintSenyera;
 
   public FulardSenyera(Context context) {

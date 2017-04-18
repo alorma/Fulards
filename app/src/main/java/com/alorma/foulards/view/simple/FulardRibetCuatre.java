@@ -13,12 +13,13 @@ import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardRibetCuatre extends Fulard {
   private Paint paintFulard;
   private Rect rect;
   private Path path;
-  private Paint paintRibet;
+  private Paint paintRibetExtern;
   private Paint paintRibetIntern;
   private int ribet;
   private Paint paintRibetMiddleIntern;
@@ -43,10 +44,10 @@ public class FulardRibetCuatre extends Fulard {
 
   @Override
   protected void init(boolean inEditMode) {
-    paintRibet = new Paint();
-    paintRibet.setStyle(Paint.Style.FILL);
+    paintRibetExtern = new Paint();
+    paintRibetExtern.setStyle(Paint.Style.FILL);
     int colorRibet = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintRibet.setColor(colorRibet);
+    paintRibetExtern.setColor(colorRibet);
 
     paintRibetMiddleExtern = new Paint();
     paintRibetMiddleExtern.setStyle(Paint.Style.FILL);
@@ -90,7 +91,7 @@ public class FulardRibetCuatre extends Fulard {
     path.lineTo(rect.right, rect.bottom);
     path.lineTo(rect.left, rect.bottom);
     path.close();
-    canvas.drawPath(path, paintRibet);
+    canvas.drawPath(path, paintRibetExtern);
     path.reset();
 
     // Ribet mig
@@ -124,5 +125,24 @@ public class FulardRibetCuatre extends Fulard {
     path.close();
     canvas.drawPath(path, paintFulard);
     path.reset();
+  }
+
+  @Override
+  public void fill(FulardCustomization customization) {
+    if (customization.getFulardColor() != 0) {
+      paintFulard.setColor(customization.getFulardColor());
+    }
+    if (customization.getRibetIntern() != 0) {
+      paintRibetIntern.setColor(customization.getRibetIntern());
+    }
+    if (customization.getRibetMiddle1() != 0) {
+      paintRibetMiddleIntern.setColor(customization.getRibetMiddle1());
+    }
+    if (customization.getRibetMiddle2() != 0) {
+      paintRibetMiddleExtern.setColor(customization.getRibetMiddle2());
+    }
+    if (customization.getRibetExtern() != 0) {
+      paintRibetExtern.setColor(customization.getRibetExtern());
+    }
   }
 }
