@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
@@ -60,6 +61,11 @@ public class FulardSimpleRibetDoble extends FulardDoble {
     rect = new Rect();
     path = new Path();
     ribet = getResources().getDimensionPixelOffset(R.dimen.ribet_simple);
+  }
+
+  @Override
+  public FulardType getFulardType() {
+    return FulardType.fulard_8;
   }
 
   @Override

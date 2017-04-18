@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+import com.alorma.foulards.FulardType;
 
 public abstract class Fulard extends View {
 
@@ -36,4 +37,6 @@ public abstract class Fulard extends View {
   public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     super.onMeasure(widthMeasureSpec, widthMeasureSpec);
   }
+
+  public abstract FulardType getFulardType();
 }
