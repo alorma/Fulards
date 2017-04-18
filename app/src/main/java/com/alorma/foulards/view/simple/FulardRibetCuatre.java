@@ -135,11 +135,11 @@ public class FulardRibetCuatre extends Fulard {
     if (customization.getRibetIntern() != 0) {
       paintRibetIntern.setColor(customization.getRibetIntern());
     }
-    if (customization.getRibetMiddle1() != 0) {
-      paintRibetMiddleIntern.setColor(customization.getRibetMiddle1());
+    if (customization.getRibetMiddleIntern() != 0) {
+      paintRibetMiddleIntern.setColor(customization.getRibetMiddleIntern());
     }
-    if (customization.getRibetMiddle2() != 0) {
-      paintRibetMiddleExtern.setColor(customization.getRibetMiddle2());
+    if (customization.getRibetMiddleExtern() != 0) {
+      paintRibetMiddleExtern.setColor(customization.getRibetMiddleExtern());
     }
     if (customization.getRibetExtern() != 0) {
       paintRibetExtern.setColor(customization.getRibetExtern());

@@ -13,8 +13,8 @@ public class FulardCustomization {
 
   private int ribetExtern;
   private int ribetMiddle;
-  private int ribetMiddle1;
-  private int ribetMiddle2;
+  private int ribetMiddleIntern;
+  private int ribetMiddleExtern;
   private int ribetIntern;
 
   private boolean senyera;
@@ -83,20 +83,20 @@ public class FulardCustomization {
     this.ribetMiddle = ribetMiddle;
   }
 
-  public int getRibetMiddle1() {
-    return ribetMiddle1;
+  public int getRibetMiddleIntern() {
+    return ribetMiddleIntern;
   }
 
-  public void setRibetMiddle1(int ribetMiddle1) {
-    this.ribetMiddle1 = ribetMiddle1;
+  public void setRibetMiddleIntern(int ribetMiddleIntern) {
+    this.ribetMiddleIntern = ribetMiddleIntern;
   }
 
-  public int getRibetMiddle2() {
-    return ribetMiddle2;
+  public int getRibetMiddleExtern() {
+    return ribetMiddleExtern;
   }
 
-  public void setRibetMiddle2(int ribetMiddle2) {
-    this.ribetMiddle2 = ribetMiddle2;
+  public void setRibetMiddleExtern(int ribetMiddleExtern) {
+    this.ribetMiddleExtern = ribetMiddleExtern;
   }
 
   public int getRibetIntern() {

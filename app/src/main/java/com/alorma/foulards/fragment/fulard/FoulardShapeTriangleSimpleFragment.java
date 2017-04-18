@@ -83,8 +83,8 @@ public class FoulardShapeTriangleSimpleFragment extends Fragment {
     FulardCustomization customization = new FulardCustomization();
     customization.setFulardColor(Color.MAGENTA);
     customization.setRibetIntern(Color.BLACK);
-    customization.setRibetMiddle1(Color.parseColor("#cccc00"));
-    customization.setRibetMiddle2(Color.GREEN);
+    customization.setRibetMiddleIntern(Color.parseColor("#cccc00"));
+    customization.setRibetMiddleExtern(Color.GREEN);
     customization.setRibetExtern(Color.YELLOW);
 
     fulardSimpleAmbRibetCuatre.fill(customization);
