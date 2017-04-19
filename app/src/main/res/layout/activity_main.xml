@@ -35,9 +35,31 @@
       android:layout_gravity="center"
       />
 
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Fulard:"
+      android:textStyle="bold"
+      android:textSize="18sp"
+      android:padding="8dp"/>
+
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:id="@+id/contentColorsSelector"
+      android:id="@+id/contentFulardColorsSelector"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Ribet:"
+      android:textStyle="bold"
+      android:textSize="18sp"
+      android:padding="8dp"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/contentRibetColorsSelector"
       />
 </LinearLayout>

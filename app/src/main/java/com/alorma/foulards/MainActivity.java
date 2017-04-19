@@ -20,6 +20,22 @@ public class MainActivity extends AppCompatActivity {
 
   private static final int REQUEST_CODE_FULARD = 21;
 
+  private int fulardColor;
+
+  private int fulardDretaColor;
+  private int fulardEsquerraColor;
+
+  private int ribetColor;
+
+  private int ribetDretaColor;
+  private int ribetEsquerraColor;
+
+  private int ribetExtern;
+  private int ribetMiddle;
+  private int ribetMiddleIntern;
+  private int ribetMiddleExtern;
+  private int ribetIntern;
+
   @BindView(R.id.buttonShape) View buttonShape;
   @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
   private Fulard fulard;
@@ -71,20 +87,41 @@ public class MainActivity extends AppCompatActivity {
 
     fulardLayout.removeAllViews();
     fulardLayout.addView(fulard, params);
-    if (customization != null) {
-      fulard.fill(customization);
-    }
+
+    customization = buildCustomization();
+
+    fulard.fill(customization);
 
     showColorsSelectorFulard(fulardType);
+    showColorsSelectorRibets(fulardType);
   }
 
+  private FulardCustomization buildCustomization() {
+    FulardCustomization customization = new FulardCustomization();
+
+    customization.setFulardColor(fulardColor);
+    customization.setFulardDretaColor(fulardDretaColor);
+    customization.setFulardEsquerraColor(fulardEsquerraColor);
+    customization.setRibetColor(ribetColor);
+    customization.setRibetIntern(ribetIntern);
+    customization.setRibetExtern(ribetExtern);
+    customization.setRibetDretaColor(ribetDretaColor);
+    customization.setRibetEsquerraColor(ribetEsquerraColor);
+    customization.setRibetMiddle(ribetMiddle);
+    customization.setRibetMiddleIntern(ribetMiddleIntern);
+    customization.setRibetMiddleExtern(ribetMiddleExtern);
+
+    return customization;
+  }
+
+  // region fulard color
   private void showColorsSelectorFulard(FulardType fulardType) {
     FulardType.Base base = fulardType.getBase();
 
     if (base == FulardType.Base.simple) {
       FulardSimpleBaseColorSelectorFragment fragment = new FulardSimpleBaseColorSelectorFragment();
       fragment.setCallback(this::onBaseSimpleColor);
-      getSupportFragmentManager().beginTransaction().replace(R.id.contentColorsSelector, fragment).commit();
+      getSupportFragmentManager().beginTransaction().replace(R.id.contentFulardColorsSelector, fragment).commit();
     } else if (base == FulardType.Base.doble) {
       FulardDosColorsBaseColorSelectorFragment fragment = new FulardDosColorsBaseColorSelectorFragment();
       fragment.setCallback(new FulardDosColorsBaseColorSelectorFragment.Callback() {
@@ -98,41 +135,48 @@ public class MainActivity extends AppCompatActivity {
           onBaseEsquerraColor(color);
         }
       });
-      getSupportFragmentManager().beginTransaction().replace(R.id.contentColorsSelector, fragment).commit();
+      getSupportFragmentManager().beginTransaction().replace(R.id.contentFulardColorsSelector, fragment).commit();
     }
   }
 
   private void onBaseSimpleColor(FulardColor color) {
     if (fulard != null) {
-      customization = new FulardCustomization();
-      customization.setFulardColor(color.getColorInt());
-      fulard.fill(customization);
+      fulardColor = color.getColorInt();
+      fulardDretaColor = 0;
+      fulardEsquerraColor = 0;
+
+      fulard.fill(buildCustomization());
     }
   }
 
   private void onBaseDretaColor(FulardColor color) {
     if (fulard != null) {
-      int colorAux = 0;
-      if (customization != null) {
-        colorAux = customization.getFulardEsquerraColor();
-      }
-      customization = new FulardCustomization();
-      customization.setFulardDretaColor(color.getColorInt());
-      customization.setFulardEsquerraColor(colorAux);
-      fulard.fill(customization);
+      fulardColor = 0;
+      fulardDretaColor = color.getColorInt();
+      fulard.fill(buildCustomization());
     }
   }
 
   private void onBaseEsquerraColor(FulardColor color) {
     if (fulard != null) {
-      int colorAux = 0;
-      if (customization != null) {
-        colorAux = customization.getFulardDretaColor();
-      }
-      customization = new FulardCustomization();
-      customization.setFulardEsquerraColor(color.getColorInt());
-      customization.setFulardDretaColor(colorAux);
-      fulard.fill(customization);
+      fulardColor = 0;
+      fulardEsquerraColor = color.getColorInt();
+      fulard.fill(buildCustomization());
     }
+  }
+  // endregion
+
+  private void showColorsSelectorRibets(FulardType fulardType) {
+    FulardType.Ribet ribet = fulardType.getRibet();
+
+    switch (ribet) {
+      case un:
+        showRibetSimpleSelector();
+        break;
+    }
+  }
+
+  private void showRibetSimpleSelector() {
+
   }
 }
