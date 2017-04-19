@@ -20,22 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
   private static final int REQUEST_CODE_FULARD = 21;
 
-  private int fulardColor;
-
-  private int fulardDretaColor;
-  private int fulardEsquerraColor;
-
-  private int ribetColor;
-
-  private int ribetDretaColor;
-  private int ribetEsquerraColor;
-
-  private int ribetExtern;
-  private int ribetMiddle;
-  private int ribetMiddleIntern;
-  private int ribetMiddleExtern;
-  private int ribetIntern;
-
   @BindView(R.id.buttonShape) View buttonShape;
   @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
   private Fulard fulard;
@@ -47,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+
+    customization = new FulardCustomization();
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -88,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     fulardLayout.removeAllViews();
     fulardLayout.addView(fulard, params);
 
-    customization = buildCustomization();
+    FulardCustomization customization = buildCustomization();
 
     fulard.fill(customization);
 
@@ -97,21 +83,21 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private FulardCustomization buildCustomization() {
-    FulardCustomization customization = new FulardCustomization();
+    FulardCustomization build = new FulardCustomization();
 
-    customization.setFulardColor(fulardColor);
-    customization.setFulardDretaColor(fulardDretaColor);
-    customization.setFulardEsquerraColor(fulardEsquerraColor);
-    customization.setRibetColor(ribetColor);
-    customization.setRibetIntern(ribetIntern);
-    customization.setRibetExtern(ribetExtern);
-    customization.setRibetDretaColor(ribetDretaColor);
-    customization.setRibetEsquerraColor(ribetEsquerraColor);
-    customization.setRibetMiddle(ribetMiddle);
-    customization.setRibetMiddleIntern(ribetMiddleIntern);
-    customization.setRibetMiddleExtern(ribetMiddleExtern);
+    build.setFulardColor(customization.getFulardColor());
+    build.setFulardDretaColor(customization.getFulardDretaColor());
+    build.setFulardEsquerraColor(customization.getFulardEsquerraColor());
+    build.setRibetColor(customization.getRibetColor());
+    build.setRibetIntern(customization.getRibetIntern());
+    build.setRibetExtern(customization.getRibetExtern());
+    build.setRibetDretaColor(customization.getRibetDretaColor());
+    build.setRibetEsquerraColor(customization.getRibetEsquerraColor());
+    build.setRibetMiddle(customization.getRibetMiddle());
+    build.setRibetMiddleIntern(customization.getRibetMiddleIntern());
+    build.setRibetMiddleExtern(customization.getRibetMiddleExtern());
 
-    return customization;
+    return build;
   }
 
   // region fulard color
@@ -141,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
   private void onBaseSimpleColor(FulardColor color) {
     if (fulard != null) {
-      fulardColor = color.getColorInt();
-      fulardDretaColor = 0;
-      fulardEsquerraColor = 0;
+      customization.setFulardColor(color.getColorInt());
+      customization.setFulardDretaColor(0);
+      customization.setFulardEsquerraColor(0);
 
       fulard.fill(buildCustomization());
     }
@@ -151,16 +137,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void onBaseDretaColor(FulardColor color) {
     if (fulard != null) {
-      fulardColor = 0;
-      fulardDretaColor = color.getColorInt();
+      customization.setFulardColor(0);
+      customization.setFulardDretaColor(color.getColorInt());
       fulard.fill(buildCustomization());
     }
   }
 
   private void onBaseEsquerraColor(FulardColor color) {
     if (fulard != null) {
-      fulardColor = 0;
-      fulardEsquerraColor = color.getColorInt();
+      customization.setFulardColor(0);
+      customization.setFulardEsquerraColor(color.getColorInt());
       fulard.fill(buildCustomization());
     }
   }
