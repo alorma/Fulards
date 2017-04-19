@@ -1,0 +1,110 @@
+ {
+  "agrupaments" : {
+    "6509db05-a14a-4d05-a099-8306705086d7" : {
+      "name" : "AEiG Montgrí",
+      "verified" : true
+    },
+    "c71f63f3-1db0-4ff2-8ca5-f368eafb6f03" : {
+      "name" : "AEiG LLuisos de Grácia",
+      "verified" : false
+    },
+    "87d2a62d-1f14-4a1a-aa76-a5379988ce5c" : {
+      "name" : "AEiG Montserrat",
+      "verified" : false
+    },
+    "93cb5df6-0360-4009-a592-0521136ba2db" : {
+      "name" : "AEiG Joan Maragall",
+      "verified" : true
+    },
+    "bee76a8c-11ff-4575-9448-f3a331cc584d" : {
+      "name" : "AE Pere Quart",
+      "verified" : true
+    }
+  },
+  "customization": {
+    "6509db05-a14a-4d05-a099-8306705086d7": {
+      "fulardType": "fulard_3",
+      "fulardColor": "blau",
+      "fulardDretaColor": null,
+      "fulardEsquerraColor": null,
+      "ribetColor": null,
+      "ribetDretaColor": null,
+      "ribetEsquerraColor": null,
+      "ribetExtern": "blanc",
+      "ribetMiddle": "negre",
+      "ribetMiddleIntern": null,
+      "ribetMiddleExtern": null,
+      "ribetIntern": null,
+      "senyera": null
+    },
+    "c71f63f3-1db0-4ff2-8ca5-f368eafb6f03": {
+      "fulardType": "fulard_7",
+      "fulardColor": null,
+      "fulardDretaColor": "verd",
+      "fulardEsquerraColor": "groc",
+      "ribetColor": "negre",
+      "ribetDretaColor": null,
+      "ribetEsquerraColor": null,
+      "ribetExtern": null,
+      "ribetMiddle": null,
+      "ribetMiddleIntern": null,
+      "ribetMiddleExtern": null,
+      "ribetIntern": null,
+      "senyera": null
+    },
+    "87d2a62d-1f14-4a1a-aa76-a5379988ce5c": {
+      "fulardType": "fulard_1",
+      "fulardColor": "gris",
+      "fulardDretaColor": null,
+      "fulardEsquerraColor": null,
+      "ribetColor": null,
+      "ribetDretaColor": null,
+      "ribetEsquerraColor": null,
+      "ribetExtern": null,
+      "ribetMiddle": null,
+      "ribetMiddleIntern": null,
+      "ribetMiddleExtern": null,
+      "ribetIntern": null,
+      "senyera": null
+    },
+    "93cb5df6-0360-4009-a592-0521136ba2db": {
+      "fulardType": "fulard_2",
+      "fulardColor": "negre",
+      "fulardDretaColor": null,
+      "fulardEsquerraColor": null,
+      "ribetColor": "verd",
+      "ribetDretaColor": null,
+      "ribetEsquerraColor": null,
+      "ribetExtern": null,
+      "ribetMiddle": null,
+      "ribetMiddleIntern": null,
+      "ribetMiddleExtern": null,
+      "ribetIntern": null,
+      "senyera": null
+    },
+    "bee76a8c-11ff-4575-9448-f3a331cc584d": {
+      "fulardType": "fulard_2",
+      "fulardColor": "negre",
+      "fulardDretaColor": null,
+      "fulardEsquerraColor": null,
+      "ribetColor": "vermell",
+      "ribetDretaColor": null,
+      "ribetEsquerraColor": null,
+      "ribetExtern": null,
+      "ribetMiddle": null,
+      "ribetMiddleIntern": null,
+      "ribetMiddleExtern": null,
+      "ribetIntern": null,
+      "senyera": null
+    }
+  },
+  "contacte": {
+    "bee76a8c-11ff-4575-9448-f3a331cc584d": {
+      "web" : "http://aeperequart.org/"
+    }
+  },
+  "votes": {
+    "c71f63f3-1db0-4ff2-8ca5-f368eafb6f03": 1,
+    "87d2a62d-1f14-4a1a-aa76-a5379988ce5c": 1
+  }
+}

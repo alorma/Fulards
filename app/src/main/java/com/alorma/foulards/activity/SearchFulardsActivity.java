@@ -9,10 +9,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.foulards.AgrupamentItemViewModel;
-import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
 import com.alorma.foulards.data.Agrupament;
+import com.alorma.foulards.data.FulardConfiguration;
 import com.alorma.foulards.data.FulardSearch;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
@@ -22,11 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.subscriptions.AsyncSubscription;
 import io.reactivex.schedulers.Schedulers;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.reactivestreams.Subscriber;
 
 public class SearchFulardsActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
   private Fulard fulard;
   private FirebaseDatabase database;
+  private Disposable disposableConfigurations;
 
   public static Intent createIntent(Context context, FulardCustomization customization, FulardSearch search) {
     Intent intent = new Intent(context, SearchFulardsActivity.class);
@@ -64,65 +66,72 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
   private void downloadFirbeaseDB(FulardSearch search) {
     database = FirebaseDatabase.getInstance();
+    readFirebaseFulardsConfigurations(database, search);
+  }
 
-    if (search.getFulardType().getBase() == FulardType.Base.simple) {
-      if (search.getFulardColor() != null) {
-        readFirebaseFulardSimpleColor(database, search, search.getFulardColor());
+  private void readFirebaseFulardsConfigurations(FirebaseDatabase database, FulardSearch search) {
+    disposableConfigurations = Flowable.fromPublisher((Subscriber<? super Map.Entry<String, FulardConfiguration>> subscriber) -> {
+      AsyncSubscription subscription = new AsyncSubscription();
+      subscriber.onSubscribe(subscription);
+      if (!subscription.isDisposed()) {
+        loadFirebaseConfigurations(database, subscriber, subscription);
       } else {
-        readFirebaseFulardSimpleNoColor(database, search);
+        subscriber.onComplete();
+      }
+    }).subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .filter(entry -> search.getFulardType().equals(entry.getValue().getFulardType()))
+        .filter(entry -> filterFulardColor(search, entry.getValue()))
+        .toList()
+        .subscribe(o -> {
+        }, Throwable::printStackTrace);
+  }
+
+  private boolean filterFulardColor(FulardSearch search, FulardConfiguration value) {
+    if (FulardType.Base.simple == search.getFulardType().getBase() && search.getFulardColor() != null) {
+      return value.getFulardColor() != null && value.getFulardColor().equals(search.getFulardColor());
+    } else if (FulardType.Base.doble == search.getFulardType().getBase()) {
+      if (search.getFulardColorEsquerra() != null && search.getFulardColorDreta() != null) {
+        return value.getFulardEsquerraColor() != null &&
+            value.getFulardDretaColor() != null &&
+            value.getFulardEsquerraColor().equals(search.getFulardColorEsquerra()) &&
+            value.getFulardDretaColor().equals(search.getFulardColorDreta());
+      } else if (search.getFulardColorEsquerra() != null) {
+        return value.getFulardEsquerraColor() != null &&
+            value.getFulardEsquerraColor().equals(search.getFulardColorEsquerra());
+      } else if (search.getFulardColorDreta() != null) {
+        return value.getFulardDretaColor() != null &&
+            value.getFulardDretaColor().equals(search.getFulardColorDreta());
       }
     }
+    return true;
   }
 
-  private void readFirebaseFulardSimpleNoColor(FirebaseDatabase database, FulardSearch search) {
-    DatabaseReference fulardTypeRef = database.getReference("fulard_" + search.getFulardType().getBase().name());
+  private void loadFirebaseConfigurations(FirebaseDatabase database, Subscriber<? super Map.Entry<String, FulardConfiguration>> subscriber,
+      Disposable disposable) {
+    DatabaseReference fulardTypeRef = database.getReference("customization");
+    fulardTypeRef.keepSynced(true);
     fulardTypeRef.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        List<String> agrupamentsId = new ArrayList<>();
-        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-          for (DataSnapshot item : snapshot.getChildren()) {
-            agrupamentsId.add(item.getValue(String.class));
+        if (!disposable.isDisposed()) {
+          for (DataSnapshot item : dataSnapshot.getChildren()) {
+            if (!disposable.isDisposed()) {
+              String key = item.getKey();
+              FulardConfiguration value = item.getValue(FulardConfiguration.class);
+              Map.Entry<String, FulardConfiguration> entry = new AbstractMap.SimpleEntry<>(key, value);
+              subscriber.onNext(entry);
+            }
           }
+          subscriber.onComplete();
         }
-        onFulardTypesLoaded(agrupamentsId);
       }
 
       @Override
       public void onCancelled(DatabaseError databaseError) {
-
+        subscriber.onError(databaseError.toException());
       }
     });
-  }
-
-  private void readFirebaseFulardSimpleColor(FirebaseDatabase database, FulardSearch search, FulardColor color) {
-    DatabaseReference fulardTypeRef =
-        database.getReference("fulard_" + search.getFulardType().getBase().name() + "/" + color.name());
-    fulardTypeRef.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        List<String> agrupamentsId = new ArrayList<>();
-        for (DataSnapshot item : dataSnapshot.getChildren()) {
-          agrupamentsId.add(item.getValue(String.class));
-        }
-        onFulardTypesLoaded(agrupamentsId);
-      }
-
-      @Override
-      public void onCancelled(DatabaseError databaseError) {
-
-      }
-    });
-  }
-
-  private void onFulardTypesLoaded(List<String> agrupamentsId) {
-    loadAgrupaments(agrupamentsId).map(AbstractMap.SimpleEntry::getValue).map(agrupament -> {
-      AgrupamentItemViewModel model = new AgrupamentItemViewModel();
-      model.setName(agrupament.getName());
-      model.setVerified(agrupament.isVerified());
-      return model;
-    }).observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::showAgrupament, this::onAgrupamentsFilterError);
   }
 
   private void showAgrupament(AgrupamentItemViewModel agrupament) {
@@ -162,8 +171,12 @@ public class SearchFulardsActivity extends AppCompatActivity {
         });
   }
 
-  private void onAgrupamentsFilterError(Throwable throwable) {
-
+  @Override
+  protected void onStop() {
+    if (disposableConfigurations != null) {
+      disposableConfigurations.dispose();
+    }
+    super.onStop();
   }
 
   private class Extras {
