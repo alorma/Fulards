@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.AgrupamentItemViewModel;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
@@ -17,13 +16,13 @@ import com.alorma.foulards.data.Agrupament;
 import com.alorma.foulards.data.FulardSearch;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
-import com.alorma.foulards.view.FulardFactory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -32,7 +31,8 @@ import org.reactivestreams.Subscriber;
 
 public class SearchFulardsActivity extends AppCompatActivity {
 
-  @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
+  @BindView(R.id.logger) TextView logger;
+
   private Fulard fulard;
   private FirebaseDatabase database;
 
@@ -57,9 +57,6 @@ public class SearchFulardsActivity extends AppCompatActivity {
       FulardSearch search = (FulardSearch) extras.getSerializable(Extras.EXTRA_SEARCH);
 
       if (customization != null && search != null) {
-        FulardType fulardType = search.getFulardType();
-        onFulardTypeSelected(fulardType, customization);
-
         downloadFirbeaseDB(search);
       }
     }
@@ -119,11 +116,26 @@ public class SearchFulardsActivity extends AppCompatActivity {
   }
 
   private void onFulardTypesLoaded(List<String> agrupamentsId) {
-    loadAgrupaments(agrupamentsId);
+    loadAgrupaments(agrupamentsId).map(AbstractMap.SimpleEntry::getValue).map(agrupament -> {
+      AgrupamentItemViewModel model = new AgrupamentItemViewModel();
+      model.setName(agrupament.getName());
+      model.setVerified(agrupament.isVerified());
+      return model;
+    }).observeOn(AndroidSchedulers.mainThread())
+        .subscribe(this::showAgrupament, this::onAgrupamentsFilterError);
   }
 
-  private void loadAgrupaments(List<String> agrupamentsId) {
-    Flowable<AbstractMap.SimpleEntry<String, Agrupament>> agrupamentsMap = Flowable.fromPublisher((Subscriber<? super DataSnapshot> s) -> {
+  private void showAgrupament(AgrupamentItemViewModel agrupament) {
+    logger.append(agrupament.getName());
+    logger.append("\n");
+    logger.append(String.valueOf(agrupament.isVerified()));
+    logger.append("\n");
+    logger.append("---");
+    logger.append("\n");
+  }
+
+  private Flowable<AbstractMap.SimpleEntry<String, Agrupament>> loadAgrupaments(List<String> agrupamentsId) {
+    return Flowable.fromPublisher((Subscriber<? super DataSnapshot> s) -> {
       DatabaseReference agrupaments = database.getReference("agrupaments");
       agrupaments.keepSynced(true);
       agrupaments.addValueEventListener(new ValueEventListener() {
@@ -152,21 +164,6 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
   private void onAgrupamentsFilterError(Throwable throwable) {
 
-  }
-
-  private void onFulardTypeSelected(FulardType fulardType, FulardCustomization customization) {
-    fulard = new FulardFactory().get(this, fulardType);
-
-    int width = getResources().getDimensionPixelOffset(R.dimen.fulard_search_size);
-    int height = getResources().getDimensionPixelOffset(R.dimen.fulard_search_size);
-
-    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, height);
-    params.gravity = Gravity.CENTER | Gravity.START;
-
-    fulardLayout.removeAllViews();
-    fulardLayout.addView(fulard, params);
-
-    fulard.fill(customization);
   }
 
   private class Extras {
