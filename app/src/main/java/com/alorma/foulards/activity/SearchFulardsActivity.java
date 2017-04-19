@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
+import com.alorma.foulards.data.Agrupament;
 import com.alorma.foulards.data.FulardSearch;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
@@ -22,13 +23,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import org.reactivestreams.Subscriber;
 
 public class SearchFulardsActivity extends AppCompatActivity {
 
   @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
   private Fulard fulard;
+  private FirebaseDatabase database;
 
   public static Intent createIntent(Context context, FulardCustomization customization, FulardSearch search) {
     Intent intent = new Intent(context, SearchFulardsActivity.class);
@@ -60,7 +66,7 @@ public class SearchFulardsActivity extends AppCompatActivity {
   }
 
   private void downloadFirbeaseDB(FulardSearch search) {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    database = FirebaseDatabase.getInstance();
 
     if (search.getFulardType().getBase() == FulardType.Base.simple) {
       if (search.getFulardColor() != null) {
@@ -113,6 +119,38 @@ public class SearchFulardsActivity extends AppCompatActivity {
   }
 
   private void onFulardTypesLoaded(List<String> agrupamentsId) {
+    loadAgrupaments(agrupamentsId);
+  }
+
+  private void loadAgrupaments(List<String> agrupamentsId) {
+    Flowable<AbstractMap.SimpleEntry<String, Agrupament>> agrupamentsMap = Flowable.fromPublisher((Subscriber<? super DataSnapshot> s) -> {
+      DatabaseReference agrupaments = database.getReference("agrupaments");
+      agrupaments.keepSynced(true);
+      agrupaments.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          s.onNext(dataSnapshot);
+          s.onComplete();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          s.onError(databaseError.toException());
+        }
+      });
+    }).subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .map(DataSnapshot::getChildren)
+        .flatMap(Flowable::fromIterable)
+        .filter(dataSnapshot -> agrupamentsId.contains(dataSnapshot.getKey()))
+        .map(dataSnapshot -> {
+          String key = dataSnapshot.getKey();
+          Agrupament agrupament = dataSnapshot.getValue(Agrupament.class);
+          return new AbstractMap.SimpleEntry<>(key, agrupament);
+        });
+  }
+
+  private void onAgrupamentsFilterError(Throwable throwable) {
 
   }
 
