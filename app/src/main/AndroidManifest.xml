@@ -16,8 +16,9 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".ColorsActivity"/>
-    <activity android:name=".FoulardShapeSelectorActivity"/>
+    <activity android:name=".activity.ColorsActivity"/>
+    <activity android:name=".activity.FoulardShapeSelectorActivity"/>
+    <activity android:name=".activity.SearchFulardsActivity"/>
   </application>
 
 </manifest>

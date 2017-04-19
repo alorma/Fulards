@@ -1,4 +1,4 @@
-package com.alorma.foulards;
+package com.alorma.foulards.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.FoulardsShape;
+import com.alorma.foulards.FulardType;
+import com.alorma.foulards.R;
 import com.alorma.foulards.fragment.fulard.FoulardShapeSenyeraFragment;
 import com.alorma.foulards.fragment.fulard.FoulardShapeSquareFragment;
 import com.alorma.foulards.fragment.fulard.FoulardShapeTriangleDobleFragment;

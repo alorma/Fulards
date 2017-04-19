@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alorma.foulards.ColorsActivity;
+import com.alorma.foulards.activity.ColorsActivity;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.R;
 

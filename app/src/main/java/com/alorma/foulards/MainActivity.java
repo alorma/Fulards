@@ -9,9 +9,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.activity.FoulardShapeSelectorActivity;
+import com.alorma.foulards.activity.SearchFulardsActivity;
 import com.alorma.foulards.data.FulardSearch;
 import com.alorma.foulards.fragment.color.fulard.FulardDosColorsBaseColorSelectorFragment;
 import com.alorma.foulards.fragment.color.fulard.FulardSimpleBaseColorSelectorFragment;
@@ -44,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    fulardSearch = new FulardSearch();
-    customization = new FulardCustomization();
-
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
@@ -56,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void onSearchButtonClick() {
-    Toast.makeText(this, "Search:" + fulardSearch, Toast.LENGTH_SHORT).show();
+    if (customization != null && fulardSearch != null) {
+      Intent intent = SearchFulardsActivity.createIntent(this, customization, fulardSearch);
+      startActivity(intent);
+    }
   }
 
   private void showShape() {
@@ -79,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
   private void onFulardTypeSelected(FulardType fulardType) {
     fulard = new FulardFactory().get(this, fulardType);
 
-    fulardSearch.setFulardType(fulardType);
-
     int width = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
     int height = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
 
@@ -90,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
     fulardLayout.removeAllViews();
     fulardLayout.addView(fulard, params);
 
-    FulardCustomization customization = buildCustomization();
-
+    customization = new FulardCustomization();
     fulard.fill(customization);
 
     fulardSearch = new FulardSearch();
+    fulardSearch.setFulardType(fulardType);
 
     showColorsSelectorFulard(fulardType);
     showColorsSelectorRibets(fulardType);

@@ -1,6 +1,8 @@
 package com.alorma.foulards.view;
 
-public class FulardCustomization {
+import java.io.Serializable;
+
+public class FulardCustomization implements Serializable {
   private int fulardColor;
 
   private int fulardDretaColor;

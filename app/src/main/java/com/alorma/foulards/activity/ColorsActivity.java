@@ -1,9 +1,11 @@
-package com.alorma.foulards;
+package com.alorma.foulards.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import com.alorma.foulards.FulardColor;
+import com.alorma.foulards.R;
 import com.alorma.foulards.fragment.ColorSelectorFragment;
 
 public class ColorsActivity extends AppCompatActivity {

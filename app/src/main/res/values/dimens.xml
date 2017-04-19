@@ -5,4 +5,5 @@
   <dimen name="ribet_tripe">6dp</dimen>
   <dimen name="ribet_cuatre">6dp</dimen>
   <dimen name="fulard_selector_size">200dp</dimen>
+  <dimen name="fulard_search_size">120dp</dimen>
 </resources>
