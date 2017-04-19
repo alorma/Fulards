@@ -143,7 +143,7 @@ public class SearchFulardsActivity extends AppCompatActivity {
           value.getRibetExtern().equals(search.getRibetExtern()) &&
           value.getRibetMiddle().equals(search.getRibetMiddle()) &&
           value.getRibetIntern().equals(search.getRibetIntern());
-    } else if (FulardType.Ribet.tres == search.getFulardType().getRibet() &&
+    } else if (FulardType.Ribet.cuatre == search.getFulardType().getRibet() &&
         search.getRibetExtern() != null &&
         search.getRibetMiddleIntern() != null &&
         search.getRibetMiddleExtern() != null &&
@@ -156,6 +156,12 @@ public class SearchFulardsActivity extends AppCompatActivity {
           value.getRibetMiddleIntern().equals(search.getRibetMiddleIntern()) &&
           value.getRibetMiddleExtern().equals(search.getRibetMiddleExtern()) &&
           value.getRibetIntern().equals(search.getRibetIntern());
+    } else if (FulardType.Ribet.senyera == search.getFulardType().getRibet() && search.isSenyera()) {
+      return value.isSenyera();
+    } else if (FulardType.Ribet.senyera_extern == search.getFulardType().getRibet()
+        && search.isSenyera()
+        && search.getRibetExtern() != null) {
+      return value.isSenyera() && value.getRibetExtern() != null && value.getRibetExtern().equals(search.getRibetExtern());
     }
 
     return true;

@@ -24,6 +24,8 @@ public class FulardSearch implements Serializable {
   private FulardColor ribetMiddleIntern;
   private FulardColor ribetMiddleExtern;
 
+  private boolean senyera;
+
   public FulardType getFulardType() {
     return fulardType;
   }
@@ -161,5 +163,13 @@ public class FulardSearch implements Serializable {
     }
     sb.append('}');
     return sb.toString();
+  }
+
+  public boolean isSenyera() {
+    return senyera;
+  }
+
+  public void setSenyera(boolean senyera) {
+    this.senyera = senyera;
   }
 }
