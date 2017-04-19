@@ -14,7 +14,6 @@ import com.alorma.foulards.R;
 import com.alorma.foulards.data.Agrupament;
 import com.alorma.foulards.data.FulardConfiguration;
 import com.alorma.foulards.data.FulardSearch;
-import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,10 +21,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.internal.subscriptions.AsyncSubscription;
 import io.reactivex.schedulers.Schedulers;
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.reactivestreams.Subscriber;
@@ -34,9 +37,8 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
   @BindView(R.id.logger) TextView logger;
 
-  private Fulard fulard;
   private FirebaseDatabase database;
-  private Disposable disposableConfigurations;
+  private CompositeDisposable disposable;
 
   public static Intent createIntent(Context context, FulardCustomization customization, FulardSearch search) {
     Intent intent = new Intent(context, SearchFulardsActivity.class);
@@ -53,6 +55,8 @@ public class SearchFulardsActivity extends AppCompatActivity {
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
 
+    disposable = new CompositeDisposable();
+
     if (getIntent() != null && getIntent().getExtras() != null) {
       Bundle extras = getIntent().getExtras();
       FulardCustomization customization = (FulardCustomization) extras.getSerializable(Extras.EXTRA_CUSTOM);
@@ -66,11 +70,44 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
   private void downloadFirbeaseDB(FulardSearch search) {
     database = FirebaseDatabase.getInstance();
-    readFirebaseFulardsConfigurations(database, search);
+    Single<List<AbstractMap.SimpleEntry<String, Agrupament>>> agrupaments = loadAgrupaments();
+    Single<List<Map.Entry<String, FulardConfiguration>>> configurations = readFirebaseFulardsConfigurations(database, search);
+
+    Disposable subscribe = Single.zip(agrupaments, configurations, (agrupamentsEntries, configurationEntries) -> {
+      Map<String, AgrupamentItemViewModel> map = new HashMap<>();
+
+      for (Map.Entry<String, Agrupament> entry : agrupamentsEntries) {
+        if (map.get(entry.getKey()) == null) {
+          map.put(entry.getKey(), new AgrupamentItemViewModel());
+        }
+        map.get(entry.getKey()).setName(entry.getValue().getName());
+        map.get(entry.getKey()).setVerified(entry.getValue().isVerified());
+      }
+
+      for (Map.Entry<String, FulardConfiguration> entry : configurationEntries) {
+        if (map.get(entry.getKey()) == null) {
+          map.put(entry.getKey(), new AgrupamentItemViewModel());
+        }
+        map.get(entry.getKey()).setFulardConfiguration(entry.getValue());
+      }
+      return map;
+    })
+        .subscribeOn(Schedulers.computation())
+        .map(Map::entrySet)
+        .toFlowable()
+        .flatMap(Flowable::fromIterable)
+        .map(Map.Entry::getValue)
+        .filter(entry -> entry.getName() != null)
+        .filter(entry -> entry.getFulardConfiguration() != null)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(this::showAgrupament, Throwable::printStackTrace);
+
+    disposable.add(disposable);
   }
 
-  private void readFirebaseFulardsConfigurations(FirebaseDatabase database, FulardSearch search) {
-    disposableConfigurations = Flowable.fromPublisher((Subscriber<? super Map.Entry<String, FulardConfiguration>> subscriber) -> {
+  private Single<List<Map.Entry<String, FulardConfiguration>>> readFirebaseFulardsConfigurations(FirebaseDatabase database,
+      FulardSearch search) {
+    return Flowable.fromPublisher((Subscriber<? super Map.Entry<String, FulardConfiguration>> subscriber) -> {
       AsyncSubscription subscription = new AsyncSubscription();
       subscriber.onSubscribe(subscription);
       if (!subscription.isDisposed()) {
@@ -83,9 +120,7 @@ public class SearchFulardsActivity extends AppCompatActivity {
         .filter(entry -> search.getFulardType().equals(entry.getValue().getFulardType()))
         .filter(entry -> filterFulardColor(search, entry.getValue()))
         .filter(entry -> filterRibetColor(search, entry.getValue()))
-        .toList()
-        .subscribe(o -> {
-        }, Throwable::printStackTrace);
+        .toList();
   }
 
   private boolean filterFulardColor(FulardSearch search, FulardConfiguration value) {
@@ -199,18 +234,38 @@ public class SearchFulardsActivity extends AppCompatActivity {
     logger.append("\n");
     logger.append(String.valueOf(agrupament.isVerified()));
     logger.append("\n");
+    logger.append(String.valueOf(agrupament.getFulardConfiguration()));
+    logger.append("\n");
     logger.append("---");
     logger.append("\n");
   }
 
-  private Flowable<AbstractMap.SimpleEntry<String, Agrupament>> loadAgrupaments(List<String> agrupamentsId) {
+  private Single<List<AbstractMap.SimpleEntry<String, Agrupament>>> loadAgrupaments() {
     return Flowable.fromPublisher((Subscriber<? super DataSnapshot> s) -> {
+      AsyncSubscription subscription = new AsyncSubscription();
+      s.onSubscribe(subscription);
+      loadAgrupamentsFromFirebase(s, subscription);
+    }).subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .map(DataSnapshot::getChildren)
+        .flatMap(Flowable::fromIterable)
+        .map(dataSnapshot -> {
+          String key = dataSnapshot.getKey();
+          Agrupament agrupament = dataSnapshot.getValue(Agrupament.class);
+          return new AbstractMap.SimpleEntry<>(key, agrupament);
+        }).toList();
+  }
+
+  private void loadAgrupamentsFromFirebase(Subscriber<? super DataSnapshot> s, Disposable disposable) {
+    if (!disposable.isDisposed()) {
       DatabaseReference agrupaments = database.getReference("agrupaments");
       agrupaments.keepSynced(true);
       agrupaments.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-          s.onNext(dataSnapshot);
+          if (!disposable.isDisposed()) {
+            s.onNext(dataSnapshot);
+          }
           s.onComplete();
         }
 
@@ -219,22 +274,13 @@ public class SearchFulardsActivity extends AppCompatActivity {
           s.onError(databaseError.toException());
         }
       });
-    }).subscribeOn(Schedulers.io())
-        .observeOn(Schedulers.computation())
-        .map(DataSnapshot::getChildren)
-        .flatMap(Flowable::fromIterable)
-        .filter(dataSnapshot -> agrupamentsId.contains(dataSnapshot.getKey()))
-        .map(dataSnapshot -> {
-          String key = dataSnapshot.getKey();
-          Agrupament agrupament = dataSnapshot.getValue(Agrupament.class);
-          return new AbstractMap.SimpleEntry<>(key, agrupament);
-        });
+    }
   }
 
   @Override
   protected void onStop() {
-    if (disposableConfigurations != null) {
-      disposableConfigurations.dispose();
+    if (disposable != null) {
+      disposable.clear();
     }
     super.onStop();
   }

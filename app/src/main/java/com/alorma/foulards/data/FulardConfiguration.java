@@ -155,4 +155,25 @@ public class FulardConfiguration implements Serializable {
   public void setRibetIntern(FulardColor ribetIntern) {
     this.ribetIntern = ribetIntern;
   }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("FulardConfiguration{");
+    sb.append("fulardType=").append(fulardType);
+    sb.append(", fulardColor=").append(fulardColor);
+    sb.append(", fulardDretaColor=").append(fulardDretaColor);
+    sb.append(", fulardEsquerraColor=").append(fulardEsquerraColor);
+    sb.append(", ribetColor=").append(ribetColor);
+    sb.append(", ribetDretaColor=").append(ribetDretaColor);
+    sb.append(", ribetEsquerraColor=").append(ribetEsquerraColor);
+    sb.append(", ribetExtern=").append(ribetExtern);
+    sb.append(", ribetMiddle=").append(ribetMiddle);
+    sb.append(", ribetIntern=").append(ribetIntern);
+    sb.append(", ribetMiddleIntern=").append(ribetMiddleIntern);
+    sb.append(", ribetMiddleExtern=").append(ribetMiddleExtern);
+    sb.append(", ribetFulardColorern=").append(ribetFulardColorern);
+    sb.append(", senyera=").append(senyera);
+    sb.append('}');
+    return sb.toString();
+  }
 }
