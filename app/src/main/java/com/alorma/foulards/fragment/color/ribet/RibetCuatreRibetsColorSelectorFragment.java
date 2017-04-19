@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alorma.foulards.activity.ColorsActivity;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.R;
+import com.alorma.foulards.activity.ColorsActivity;
 
 public class RibetCuatreRibetsColorSelectorFragment extends Fragment {
 
@@ -20,13 +20,11 @@ public class RibetCuatreRibetsColorSelectorFragment extends Fragment {
   private static final int REQUEST_CODE_COLOR_MIDDLE_INTERN = 22;
   private static final int REQUEST_CODE_COLOR_MIDDLE_EXTERN = 21;
   private static final int REQUEST_CODE_COLOR_EXTERN = 20;
-
-  private Callback callback;
-
   @BindView(R.id.ribetInternSelector) View ribetInternSelector;
   @BindView(R.id.ribetMiddleInternSelector) View ribetMiddleInternSelector;
   @BindView(R.id.ribetMiddleExternSelector) View ribetMiddleExternSelector;
   @BindView(R.id.ribetExternSelector) View ribetExternSelector;
+  private Callback callback;
 
   @Nullable
   @Override
@@ -65,6 +63,16 @@ public class RibetCuatreRibetsColorSelectorFragment extends Fragment {
         getCallback().onRibetMiddleExternColorSelector(color);
       } else if (requestCode == REQUEST_CODE_COLOR_EXTERN) {
         getCallback().onRibetExternColorSelector(color);
+      }
+    } else if (resultCode == Activity.RESULT_CANCELED) {
+      if (requestCode == REQUEST_CODE_COLOR_INTERN) {
+        getCallback().onRibetInternColorSelector(null);
+      } else if (requestCode == REQUEST_CODE_COLOR_MIDDLE_INTERN) {
+        getCallback().onRibetMiddleInternColorSelector(null);
+      } else if (requestCode == REQUEST_CODE_COLOR_MIDDLE_EXTERN) {
+        getCallback().onRibetMiddleExternColorSelector(null);
+      } else if (requestCode == REQUEST_CODE_COLOR_EXTERN) {
+        getCallback().onRibetExternColorSelector(null);
       }
     }
   }

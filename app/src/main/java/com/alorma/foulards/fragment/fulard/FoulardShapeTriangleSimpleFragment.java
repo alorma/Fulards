@@ -12,15 +12,15 @@ import com.alorma.foulards.view.Fulard;
 
 public class FoulardShapeTriangleSimpleFragment extends FulardSelectorFragment {
 
-  public static FoulardShapeTriangleSimpleFragment newInstance() {
-    return new FoulardShapeTriangleSimpleFragment();
-  }
-
   @BindView(R.id.fulardSimple) Fulard fulardSimple;
   @BindView(R.id.fulardSimpleAmbRibet) Fulard fulardSimpleAmbRibet;
   @BindView(R.id.fulardSimpleAmbRibetDoble) Fulard fulardSimpleAmbRibetDoble;
   @BindView(R.id.fulardSimpleAmbRibetTripe) Fulard fulardSimpleAmbRibetTripe;
   @BindView(R.id.fulardSimpleAmbRibetCuatre) Fulard fulardSimpleAmbRibetCuatre;
+
+  public static FoulardShapeTriangleSimpleFragment newInstance() {
+    return new FoulardShapeTriangleSimpleFragment();
+  }
 
   @Nullable
   @Override

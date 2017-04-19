@@ -7,7 +7,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
@@ -43,20 +42,17 @@ public class FulardCuadratRibetDoble extends Fulard {
     paintFulard = new Paint();
     paintFulard.setAntiAlias(true);
     paintFulard.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintFulard.setColor(color);
+    paintFulard.setColor(getGrayMiddle());
 
     paintRibetIntern = new Paint();
     paintRibetIntern.setAntiAlias(true);
     paintRibetIntern.setStyle(Paint.Style.FILL);
-    int colorRibetIntern = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintRibetIntern.setColor(colorRibetIntern);
+    paintRibetIntern.setColor(getGrayLight());
 
     paintRibetExtern = new Paint();
     paintRibetExtern.setAntiAlias(true);
     paintRibetExtern.setStyle(Paint.Style.FILL);
-    int colorRibetExtern = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintRibetExtern.setColor(colorRibetExtern);
+    paintRibetExtern.setColor(getGrayMiddle());
 
     rect = new Rect();
 
@@ -92,12 +88,18 @@ public class FulardCuadratRibetDoble extends Fulard {
   public void fill(FulardCustomization customization) {
     if (customization.getFulardColor() != 0) {
       paintFulard.setColor(customization.getFulardColor());
+    } else {
+      paintFulard.setColor(getGrayMiddle());
     }
     if (customization.getRibetExtern() != 0) {
       paintRibetExtern.setColor(customization.getRibetExtern());
+    } else {
+      paintRibetExtern.setColor(getGrayMiddle());
     }
     if (customization.getRibetIntern() != 0) {
       paintRibetIntern.setColor(customization.getRibetIntern());
+    } else {
+      paintRibetIntern.setColor(getGrayLight());
     }
     invalidate();
   }

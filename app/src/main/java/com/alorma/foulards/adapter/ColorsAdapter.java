@@ -1,6 +1,5 @@
 package com.alorma.foulards.adapter;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +52,17 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
     this.callback = callback;
   }
 
+  public interface Callback {
+    void onColorSelected(FulardColor color);
+
+    class Null implements Callback {
+      @Override
+      public void onColorSelected(FulardColor color) {
+
+      }
+    }
+  }
+
   public class Holder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.colorImage) ImageView colorImage;
@@ -66,17 +76,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         FulardColor color = items.get(getAdapterPosition());
         getCallback().onColorSelected(color);
       });
-    }
-  }
-
-  public interface Callback {
-    void onColorSelected(FulardColor color);
-
-    class Null implements Callback {
-      @Override
-      public void onColorSelected(FulardColor color) {
-
-      }
     }
   }
 }

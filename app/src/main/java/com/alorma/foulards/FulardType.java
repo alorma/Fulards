@@ -16,22 +16,6 @@ public enum FulardType {
   fulard_13(Base.simple, Ribet.senyera),
   fulard_14(Base.simple, Ribet.senyera_extern);
 
-  public enum Base {
-    simple,
-    doble;
-  }
-
-  public enum Ribet {
-    none,
-    un,
-    dos_colors,
-    dos,
-    tres,
-    cuatre,
-    senyera,
-    senyera_extern;
-  }
-
   private final Base base;
   private final Ribet ribet;
 
@@ -39,7 +23,6 @@ public enum FulardType {
     this.base = base;
     this.ribet = Ribet.none;
   }
-
   FulardType(Base base, Ribet ribet) {
     this.base = base;
     this.ribet = ribet;
@@ -60,5 +43,21 @@ public enum FulardType {
     sb.append(", ribet=").append(ribet);
     sb.append('}');
     return sb.toString();
+  }
+
+  public enum Base {
+    simple,
+    doble;
+  }
+
+  public enum Ribet {
+    none,
+    un,
+    dos_colors,
+    dos,
+    tres,
+    cuatre,
+    senyera,
+    senyera_extern;
   }
 }

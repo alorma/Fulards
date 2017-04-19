@@ -10,19 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alorma.foulards.activity.ColorsActivity;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.R;
+import com.alorma.foulards.activity.ColorsActivity;
 
 public class RibetDosRibetsColorSelectorFragment extends Fragment {
 
   private static final int REQUEST_CODE_COLOR_INTERN = 23;
   private static final int REQUEST_CODE_COLOR_EXTERN = 22;
-
-  private Callback callback;
-
   @BindView(R.id.ribetInternSelector) View ribetInternSelector;
   @BindView(R.id.ribetExternSelector) View ribetExternSelector;
+  private Callback callback;
 
   @Nullable
   @Override
@@ -55,6 +53,12 @@ public class RibetDosRibetsColorSelectorFragment extends Fragment {
         getCallback().onRibetInternColorSelector(color);
       } else if (requestCode == REQUEST_CODE_COLOR_EXTERN) {
         getCallback().onRibetExternColorSelector(color);
+      }
+    } else if (resultCode == Activity.RESULT_CANCELED) {
+      if (requestCode == REQUEST_CODE_COLOR_INTERN) {
+        getCallback().onRibetInternColorSelector(null);
+      } else if (requestCode == REQUEST_CODE_COLOR_EXTERN) {
+        getCallback().onRibetExternColorSelector(null);
       }
     }
   }

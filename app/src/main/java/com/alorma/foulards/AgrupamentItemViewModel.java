@@ -8,12 +8,12 @@ public class AgrupamentItemViewModel {
     return name;
   }
 
-  public boolean isVerified() {
-    return verified;
-  }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  public boolean isVerified() {
+    return verified;
   }
 
   public void setVerified(boolean verified) {

@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
@@ -45,19 +44,16 @@ public class FulardDobleRibetSimple extends FulardDoble {
     paintFulardEsquerra = new Paint();
     paintFulardEsquerra.setAntiAlias(true);
     paintFulardEsquerra.setStyle(Paint.Style.FILL);
-    int colorFulardEsquerra = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintFulardEsquerra.setColor(colorFulardEsquerra);
+    paintFulardEsquerra.setColor(getGrayLight());
 
     paintFulardDreta = new Paint();
     paintFulardDreta.setAntiAlias(true);
     paintFulardDreta.setStyle(Paint.Style.FILL);
-    int colorFulardDreta = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintFulardDreta.setColor(colorFulardDreta);
+    paintFulardDreta.setColor(getGrayMiddle());
 
     paintRibet = new Paint();
     paintRibet.setStyle(Paint.Style.FILL);
-    int colorRibet = ContextCompat.getColor(getContext(), R.color.grey_fulard_dark);
-    paintRibet.setColor(colorRibet);
+    paintRibet.setColor(getGrayDark());
 
     rect = new Rect();
     path = new Path();
@@ -104,12 +100,18 @@ public class FulardDobleRibetSimple extends FulardDoble {
   public void fill(FulardCustomization customization) {
     if (customization.getFulardDretaColor() != 0) {
       paintFulardDreta.setColor(customization.getFulardDretaColor());
+    } else {
+      paintFulardDreta.setColor(getGrayMiddle());
     }
     if (customization.getFulardEsquerraColor() != 0) {
       paintFulardEsquerra.setColor(customization.getFulardEsquerraColor());
+    } else {
+      paintFulardEsquerra.setColor(getGrayLight());
     }
     if (customization.getRibetColor() != 0) {
       paintRibet.setColor(customization.getRibetColor());
+    } else {
+      paintRibet.setColor(getGrayDark());
     }
     invalidate();
   }

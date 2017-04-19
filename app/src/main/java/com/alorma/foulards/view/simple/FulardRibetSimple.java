@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
@@ -44,13 +43,11 @@ public class FulardRibetSimple extends Fulard {
     paint = new Paint();
     paint.setAntiAlias(true);
     paint.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paint.setColor(color);
+    paint.setColor(getGrayMiddle());
 
     paintRibet = new Paint();
     paintRibet.setStyle(Paint.Style.FILL);
-    int colorRibet = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintRibet.setColor(colorRibet);
+    paintRibet.setColor(getGrayLight());
 
     rect = new Rect();
     path = new Path();
@@ -89,9 +86,13 @@ public class FulardRibetSimple extends Fulard {
   public void fill(FulardCustomization customization) {
     if (customization.getFulardColor() != 0) {
       paint.setColor(customization.getFulardColor());
+    } else {
+      paint.setColor(getGrayMiddle());
     }
     if (customization.getRibetColor() != 0) {
       paintRibet.setColor(customization.getRibetColor());
+    } else {
+      paintRibet.setColor(getGrayLight());
     }
   }
 }

@@ -10,19 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alorma.foulards.activity.ColorsActivity;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.R;
+import com.alorma.foulards.activity.ColorsActivity;
 
 public class RibetDosColorSelectorFragment extends Fragment {
 
   private static final int REQUEST_CODE_COLOR_DRETA = 22;
   private static final int REQUEST_CODE_COLOR_ESQUERRA = 23;
-
-  private Callback callback;
-
   @BindView(R.id.colorSelectorDreta) View colorSelectorDreta;
   @BindView(R.id.colorSelectorEsquerra) View colorSelectorEsquerra;
+  private Callback callback;
 
   @Nullable
   @Override
@@ -50,12 +48,17 @@ public class RibetDosColorSelectorFragment extends Fragment {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
+      FulardColor color = (FulardColor) data.getExtras().get(ColorsActivity.Extras.EXTRA_COLOR);
       if (requestCode == REQUEST_CODE_COLOR_DRETA) {
-        FulardColor color = (FulardColor) data.getExtras().get(ColorsActivity.Extras.EXTRA_COLOR);
         getCallback().onRibetColorDretaSelector(color);
       } else if (requestCode == REQUEST_CODE_COLOR_ESQUERRA) {
-        FulardColor color = (FulardColor) data.getExtras().get(ColorsActivity.Extras.EXTRA_COLOR);
         getCallback().onRibetColorEsquerraSelector(color);
+      }
+    } else if (resultCode == Activity.RESULT_CANCELED) {
+      if (requestCode == REQUEST_CODE_COLOR_DRETA) {
+        getCallback().onRibetColorDretaSelector(null);
+      } else if (requestCode == REQUEST_CODE_COLOR_ESQUERRA) {
+        getCallback().onRibetColorEsquerraSelector(null);
       }
     }
   }

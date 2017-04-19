@@ -2,7 +2,6 @@ package com.alorma.foulards.fragment.fulard;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,14 @@ import com.alorma.foulards.view.Fulard;
 
 public class FoulardShapeTriangleDobleFragment extends FulardSelectorFragment {
 
-  public static FoulardShapeTriangleDobleFragment newInstance() {
-    return new FoulardShapeTriangleDobleFragment();
-  }
-
   @BindView(R.id.fulardDosColorsSenseRibet) Fulard fulardDosColorsSenseRibet;
   @BindView(R.id.fulardDosColorsAmbRibet) Fulard fulardDosColorsAmbRibet;
   @BindView(R.id.fulardDosColorsAmbRibetDoble) Fulard fulardDosColorsAmbRibetDoble;
   @BindView(R.id.fulardSimpleAmbRibetDoble) Fulard fulardSimpleAmbRibetDoble;
+
+  public static FoulardShapeTriangleDobleFragment newInstance() {
+    return new FoulardShapeTriangleDobleFragment();
+  }
 
   @Nullable
   @Override

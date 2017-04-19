@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
@@ -46,23 +45,19 @@ public class FulardRibetTriple extends Fulard {
     paintFulard = new Paint();
     paintFulard.setAntiAlias(true);
     paintFulard.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintFulard.setColor(color);
+    paintFulard.setColor(getGrayMiddle());
 
     paintRibetExtern = new Paint();
     paintRibetExtern.setStyle(Paint.Style.FILL);
-    int colorribet = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintRibetExtern.setColor(colorribet);
+    paintRibetExtern.setColor(getGrayLight());
 
     paintRibetMiddle = new Paint();
     paintRibetMiddle.setStyle(Paint.Style.FILL);
-    int colorRibetMiddle = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintRibetMiddle.setColor(colorRibetMiddle);
+    paintRibetMiddle.setColor(getGrayMiddle());
 
     paintRibetIntern = new Paint();
     paintRibetIntern.setStyle(Paint.Style.FILL);
-    int colorRibetIntern = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintRibetIntern.setColor(colorRibetIntern);
+    paintRibetIntern.setColor(getGrayLight());
 
     rect = new Rect();
     path = new Path();
@@ -119,15 +114,23 @@ public class FulardRibetTriple extends Fulard {
   public void fill(FulardCustomization customization) {
     if (customization.getFulardColor() != 0) {
       paintFulard.setColor(customization.getFulardColor());
+    } else {
+      paintFulard.setColor(getGrayMiddle());
     }
     if (customization.getRibetIntern() != 0) {
       paintRibetIntern.setColor(customization.getRibetIntern());
+    } else {
+      paintRibetIntern.setColor(getGrayLight());
     }
     if (customization.getRibetMiddle() != 0) {
       paintRibetMiddle.setColor(customization.getRibetMiddle());
+    } else {
+      paintRibetMiddle.setColor(getGrayMiddle());
     }
     if (customization.getRibetExtern() != 0) {
       paintRibetExtern.setColor(customization.getRibetExtern());
+    } else {
+      paintRibetExtern.setColor(getGrayLight());
     }
   }
 }

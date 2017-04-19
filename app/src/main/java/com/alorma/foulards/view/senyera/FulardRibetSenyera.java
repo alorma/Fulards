@@ -43,8 +43,7 @@ public class FulardRibetSenyera extends FulardSenyera {
     paint = new Paint();
     paint.setAntiAlias(true);
     paint.setStyle(Paint.Style.FILL);
-    int color = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paint.setColor(color);
+    paint.setColor(getGrayMiddle());
 
     paintSenyera = new Paint();
     paintSenyera.setStyle(Paint.Style.FILL);
@@ -88,6 +87,8 @@ public class FulardRibetSenyera extends FulardSenyera {
   public void fill(FulardCustomization customization) {
     if (customization.getFulardColor() != 0) {
       paint.setColor(customization.getFulardColor());
+    } else {
+      paint.setColor(getGrayMiddle());
     }
     invalidate();
   }

@@ -17,9 +17,8 @@ import java.util.Arrays;
 
 public class ColorSelectorFragment extends Fragment {
 
-  private Callback callback;
-
   @BindView(R.id.colorsRecycler) RecyclerView recyclerView;
+  private Callback callback;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {

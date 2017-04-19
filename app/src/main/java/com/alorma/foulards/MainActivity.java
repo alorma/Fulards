@@ -143,7 +143,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void onBaseSimpleColor(FulardColor color) {
-    customization.setFulardColor(color.getColorInt());
+    if (color != null) {
+      customization.setFulardColor(color.getColorInt());
+    } else {
+      customization.setFulardColor(0);
+    }
     customization.setFulardDretaColor(0);
     customization.setFulardEsquerraColor(0);
 
@@ -154,7 +158,11 @@ public class MainActivity extends AppCompatActivity {
 
   private void onBaseDretaColor(FulardColor color) {
     customization.setFulardColor(0);
-    customization.setFulardDretaColor(color.getColorInt());
+    if (color != null) {
+      customization.setFulardDretaColor(color.getColorInt());
+    } else {
+      customization.setFulardDretaColor(0);
+    }
 
     fulardSearch.setFulardColorDreta(color);
 
@@ -163,7 +171,11 @@ public class MainActivity extends AppCompatActivity {
 
   private void onBaseEsquerraColor(FulardColor color) {
     customization.setFulardColor(0);
-    customization.setFulardEsquerraColor(color.getColorInt());
+    if (color != null) {
+      customization.setFulardEsquerraColor(color.getColorInt());
+    } else {
+      customization.setFulardEsquerraColor(0);
+    }
 
     fulardSearch.setFulardColorEsquerra(color);
 
@@ -219,7 +231,11 @@ public class MainActivity extends AppCompatActivity {
   private void showRibetSimpleSelector() {
     RibetSimpleColorSelectorFragment fragment = new RibetSimpleColorSelectorFragment();
     fragment.setCallback(color -> {
-      customization.setRibetColor(color.getColorInt());
+      if (color != null) {
+        customization.setRibetColor(color.getColorInt());
+      } else {
+        customization.setRibetColor(0);
+      }
       fulardSearch.setRibetColor(color);
       applyCustom();
     });
@@ -229,7 +245,11 @@ public class MainActivity extends AppCompatActivity {
   private void showRibetSenyeraSimpleSelector() {
     RibetSimpleColorSelectorFragment fragment = new RibetSimpleColorSelectorFragment();
     fragment.setCallback(color -> {
-      customization.setRibetExtern(color.getColorInt());
+      if (color != null) {
+        customization.setRibetExtern(color.getColorInt());
+      } else {
+        customization.setRibetExtern(0);
+      }
       fulardSearch.setRibetExtern(color);
       applyCustom();
     });
@@ -242,7 +262,11 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onRibetColorDretaSelector(FulardColor color) {
         customization.setRibetColor(0);
-        customization.setRibetDretaColor(color.getColorInt());
+        if (color != null) {
+          customization.setRibetDretaColor(color.getColorInt());
+        } else {
+          customization.setRibetDretaColor(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetDretaColor(color);
@@ -253,7 +277,11 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onRibetColorEsquerraSelector(FulardColor color) {
         customization.setRibetColor(0);
-        customization.setRibetEsquerraColor(color.getColorInt());
+        if (color != null) {
+          customization.setRibetEsquerraColor(color.getColorInt());
+        } else {
+          customization.setRibetEsquerraColor(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(color);
@@ -275,7 +303,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleIntern(0);
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
-        customization.setRibetIntern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetIntern(color.getColorInt());
+        } else {
+          customization.setRibetIntern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetIntern(color);
@@ -291,7 +323,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleIntern(0);
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
-        customization.setRibetExtern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetExtern(color.getColorInt());
+        } else {
+          customization.setRibetExtern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -318,7 +354,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleIntern(0);
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
-        customization.setRibetIntern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetIntern(color.getColorInt());
+        } else {
+          customization.setRibetIntern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -338,7 +378,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleIntern(0);
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
-        customization.setRibetExtern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetExtern(color.getColorInt());
+        } else {
+          customization.setRibetExtern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -357,7 +401,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetDretaColor(0);
         customization.setRibetMiddleIntern(0);
         customization.setRibetMiddleExtern(0);
-        customization.setRibetMiddle(color.getColorInt());
+        if (color != null) {
+          customization.setRibetMiddle(color.getColorInt());
+        } else {
+          customization.setRibetMiddle(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -381,7 +429,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetEsquerraColor(0);
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
-        customization.setRibetIntern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetIntern(color.getColorInt());
+        } else {
+          customization.setRibetIntern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -398,7 +450,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetEsquerraColor(0);
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
-        customization.setRibetExtern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetExtern(color.getColorInt());
+        } else {
+          customization.setRibetExtern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -415,7 +471,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetEsquerraColor(0);
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
-        customization.setRibetMiddleIntern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetMiddleIntern(color.getColorInt());
+        } else {
+          customization.setRibetMiddleIntern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);
@@ -432,7 +492,11 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetEsquerraColor(0);
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
-        customization.setRibetMiddleExtern(color.getColorInt());
+        if (color != null) {
+          customization.setRibetMiddleExtern(color.getColorInt());
+        } else {
+          customization.setRibetMiddleExtern(0);
+        }
 
         fulardSearch.setRibetColor(null);
         fulardSearch.setRibetEsquerraColor(null);

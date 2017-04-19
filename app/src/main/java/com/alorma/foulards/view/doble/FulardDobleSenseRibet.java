@@ -8,10 +8,8 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
-import com.alorma.foulards.R;
 import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardDobleSenseRibet extends FulardDoble {
@@ -43,14 +41,12 @@ public class FulardDobleSenseRibet extends FulardDoble {
     paintFulardEsquerra = new Paint();
     paintFulardEsquerra.setAntiAlias(true);
     paintFulardEsquerra.setStyle(Paint.Style.FILL);
-    int colorFulardEsquerra = ContextCompat.getColor(getContext(), R.color.grey_fulard_middle);
-    paintFulardEsquerra.setColor(colorFulardEsquerra);
+    paintFulardEsquerra.setColor(getGrayMiddle());
 
     paintFulardDreta = new Paint();
     paintFulardDreta.setAntiAlias(true);
     paintFulardDreta.setStyle(Paint.Style.FILL);
-    int colorFulardDreta = ContextCompat.getColor(getContext(), R.color.grey_fulard_light);
-    paintFulardDreta.setColor(colorFulardDreta);
+    paintFulardDreta.setColor(getGrayLight());
 
     rect = new Rect();
     path = new Path();
@@ -87,9 +83,13 @@ public class FulardDobleSenseRibet extends FulardDoble {
   public void fill(FulardCustomization customization) {
     if (customization.getFulardDretaColor() != 0) {
       paintFulardDreta.setColor(customization.getFulardDretaColor());
+    } else {
+      paintFulardDreta.setColor(getGrayLight());
     }
     if (customization.getFulardEsquerraColor() != 0) {
       paintFulardEsquerra.setColor(customization.getFulardEsquerraColor());
+    } else {
+      paintFulardEsquerra.setColor(getGrayMiddle());
     }
     invalidate();
   }

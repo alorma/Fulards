@@ -22,7 +22,7 @@ public class FulardSelectorFragment extends Fragment {
 
     class Null implements Callback {
       @Override
-      public void onFulardSelected(FulardType fulardType){
+      public void onFulardSelected(FulardType fulardType) {
 
       }
     }

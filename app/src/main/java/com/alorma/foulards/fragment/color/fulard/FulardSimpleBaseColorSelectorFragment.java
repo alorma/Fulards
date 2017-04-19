@@ -10,17 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alorma.foulards.activity.ColorsActivity;
 import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.R;
+import com.alorma.foulards.activity.ColorsActivity;
 
 public class FulardSimpleBaseColorSelectorFragment extends Fragment {
 
   private static final int REQUEST_CODE_COLOR = 22;
-
-  private Callback callback;
-
   @BindView(R.id.colorSelector) View colorSelector;
+  private Callback callback;
 
   @Nullable
   @Override
@@ -53,6 +51,8 @@ public class FulardSimpleBaseColorSelectorFragment extends Fragment {
         FulardColor color = (FulardColor) data.getExtras().get(ColorsActivity.Extras.EXTRA_COLOR);
         getCallback().onFulardBaseColorSelector(color);
       }
+    } else if (resultCode == Activity.RESULT_CANCELED) {
+      getCallback().onFulardBaseColorSelector(null);
     }
   }
 
