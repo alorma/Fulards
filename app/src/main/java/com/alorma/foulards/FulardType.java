@@ -14,7 +14,7 @@ public enum FulardType {
   fulard_11(Base.simple, Ribet.un),
   fulard_12(Base.simple, Ribet.dos),
   fulard_13(Base.simple, Ribet.senyera),
-  fulard_14(Base.simple, Ribet.senyera_intern);
+  fulard_14(Base.simple, Ribet.senyera_extern);
 
   public enum Base {
     simple(1),
@@ -39,7 +39,7 @@ public enum FulardType {
     tres(3),
     cuatre(4),
     senyera(0),
-    senyera_intern(1);
+    senyera_extern(1);
 
     private int colors;
 

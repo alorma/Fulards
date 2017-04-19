@@ -2,6 +2,7 @@ package com.alorma.foulards;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
   private Fulard fulard;
 
   private FulardCustomization customization;
+  private Fragment ribetFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +173,24 @@ public class MainActivity extends AppCompatActivity {
       case cuatre:
         showRibetSimpleSelectorCuatreRibets();
         break;
+      case senyera_extern:
+        showRibetSenyeraSimpleSelector();
+        break;
+      case none:
+      case senyera:
+        removeRibetColorsFragment();
     }
+  }
+
+  private void removeRibetColorsFragment() {
+    if (ribetFragment != null) {
+      getSupportFragmentManager().beginTransaction().remove(ribetFragment).commit();
+    }
+  }
+
+  private void setRibetFragment(Fragment fragment) {
+    this.ribetFragment = fragment;
+    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
   }
 
   private void showRibetSimpleSelector() {
@@ -180,7 +199,16 @@ public class MainActivity extends AppCompatActivity {
       customization.setRibetColor(color.getColorInt());
       applyCustom();
     });
-    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+    setRibetFragment(fragment);
+  }
+
+  private void showRibetSenyeraSimpleSelector() {
+    RibetSimpleColorSelectorFragment fragment = new RibetSimpleColorSelectorFragment();
+    fragment.setCallback(color -> {
+      customization.setRibetExtern(color.getColorInt());
+      applyCustom();
+    });
+    setRibetFragment(fragment);
   }
 
   private void showRibetDosColorsSelector() {
@@ -200,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         applyCustom();
       }
     });
-    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+    setRibetFragment(fragment);
   }
 
   private void showRibetSimpleSelectorDosRibets() {
@@ -230,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         applyCustom();
       }
     });
-    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+    setRibetFragment(fragment);
   }
 
   private void showRibetSimpleSelectorTresRibets() {
@@ -271,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         applyCustom();
       }
     });
-    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+    setRibetFragment(fragment);
   }
 
   private void showRibetSimpleSelectorCuatreRibets() {
@@ -317,6 +345,6 @@ public class MainActivity extends AppCompatActivity {
         applyCustom();
       }
     });
-    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+    setRibetFragment(fragment);
   }
 }
