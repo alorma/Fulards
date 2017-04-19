@@ -8,7 +8,7 @@ public enum FulardType {
   fulard_5(Base.simple, Ribet.cuatre),
   fulard_6(Base.doble),
   fulard_7(Base.doble, Ribet.un),
-  fulard_8(Base.doble, Ribet.dos_colors),
+  fulard_8(Base.simple, Ribet.dos_colors),
   fulard_9(Base.doble, Ribet.dos_colors),
   fulard_10(Base.simple),
   fulard_11(Base.simple, Ribet.un),
@@ -45,10 +45,6 @@ public enum FulardType {
 
     Ribet(int colors) {
       this.colors = colors;
-    }
-
-    public int getColors() {
-      return colors;
     }
   }
 

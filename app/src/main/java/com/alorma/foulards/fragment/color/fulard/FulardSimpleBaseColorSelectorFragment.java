@@ -1,4 +1,4 @@
-package com.alorma.foulards.fragment;
+package com.alorma.foulards.fragment.color.fulard;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +27,7 @@ public class FulardSimpleBaseColorSelectorFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    return inflater.inflate(R.layout.fragment_base_color_selector, null, false);
+    return inflater.inflate(R.layout.fragment_fulard_base_color_selector, null, false);
   }
 
   @Override

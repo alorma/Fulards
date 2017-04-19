@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alorma.foulards.fragment.FulardDosColorsBaseColorSelectorFragment;
-import com.alorma.foulards.fragment.FulardSimpleBaseColorSelectorFragment;
+import com.alorma.foulards.fragment.color.fulard.FulardDosColorsBaseColorSelectorFragment;
+import com.alorma.foulards.fragment.color.fulard.FulardSimpleBaseColorSelectorFragment;
+import com.alorma.foulards.fragment.color.ribet.RibetDosColorSelectorFragment;
+import com.alorma.foulards.fragment.color.ribet.RibetSimpleColorSelectorFragment;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
 import com.alorma.foulards.view.FulardFactory;
@@ -43,11 +45,6 @@ public class MainActivity extends AppCompatActivity {
   private void showShape() {
     Intent intent = new Intent(this, FoulardShapeSelectorActivity.class);
     startActivityForResult(intent, REQUEST_CODE_FULARD);
-  }
-
-  private void showColors() {
-    Intent intent = new Intent(this, ColorsActivity.class);
-    startActivity(intent);
   }
 
   @Override
@@ -126,27 +123,27 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void onBaseSimpleColor(FulardColor color) {
-    if (fulard != null) {
-      customization.setFulardColor(color.getColorInt());
-      customization.setFulardDretaColor(0);
-      customization.setFulardEsquerraColor(0);
+    customization.setFulardColor(color.getColorInt());
+    customization.setFulardDretaColor(0);
+    customization.setFulardEsquerraColor(0);
 
-      fulard.fill(buildCustomization());
-    }
+    applyCustom();
   }
 
   private void onBaseDretaColor(FulardColor color) {
-    if (fulard != null) {
-      customization.setFulardColor(0);
-      customization.setFulardDretaColor(color.getColorInt());
-      fulard.fill(buildCustomization());
-    }
+    customization.setFulardColor(0);
+    customization.setFulardDretaColor(color.getColorInt());
+    applyCustom();
   }
 
   private void onBaseEsquerraColor(FulardColor color) {
+    customization.setFulardColor(0);
+    customization.setFulardEsquerraColor(color.getColorInt());
+    applyCustom();
+  }
+
+  private void applyCustom() {
     if (fulard != null) {
-      customization.setFulardColor(0);
-      customization.setFulardEsquerraColor(color.getColorInt());
       fulard.fill(buildCustomization());
     }
   }
@@ -159,10 +156,38 @@ public class MainActivity extends AppCompatActivity {
       case un:
         showRibetSimpleSelector();
         break;
+      case dos_colors:
+        showRibetDosColorsSelector();
+        break;
     }
   }
 
   private void showRibetSimpleSelector() {
+    RibetSimpleColorSelectorFragment fragment = new RibetSimpleColorSelectorFragment();
+    fragment.setCallback(color -> {
+      customization.setRibetColor(color.getColorInt());
+      applyCustom();
+    });
+    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+  }
 
+  private void showRibetDosColorsSelector() {
+    RibetDosColorSelectorFragment fragment = new RibetDosColorSelectorFragment();
+    fragment.setCallback(new RibetDosColorSelectorFragment.Callback() {
+      @Override
+      public void onRibetColorDretaSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetDretaColor(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetColorEsquerraSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(color.getColorInt());
+        applyCustom();
+      }
+    });
+    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
   }
 }
