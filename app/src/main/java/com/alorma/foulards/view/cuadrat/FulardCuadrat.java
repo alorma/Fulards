@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardCuadrat extends Fulard {
   private Paint paint;
@@ -56,5 +57,13 @@ public class FulardCuadrat extends Fulard {
     canvas.getClipBounds(rect);
 
     canvas.drawRect(rect, paint);
+  }
+
+  @Override
+  public void fill(FulardCustomization customization) {
+    if (customization.getFulardColor() != 0) {
+      paint.setColor(customization.getFulardColor());
+    }
+    invalidate();
   }
 }

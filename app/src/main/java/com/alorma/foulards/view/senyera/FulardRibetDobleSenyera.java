@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardRibetDobleSenyera extends FulardSenyera {
   private Paint paintFulard;
@@ -92,5 +93,16 @@ public class FulardRibetDobleSenyera extends FulardSenyera {
     path.close();
     canvas.drawPath(path, paintFulard);
     path.reset();
+  }
+
+  @Override
+  public void fill(FulardCustomization customization) {
+    if (customization.getFulardColor() != 0) {
+      paintFulard.setColor(customization.getFulardColor());
+    }
+    if (customization.getRibetExtern() != 0) {
+      paintRibetExtern.setColor(customization.getRibetExtern());
+    }
+    invalidate();
   }
 }

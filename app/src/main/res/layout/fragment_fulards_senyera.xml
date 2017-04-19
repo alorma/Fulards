@@ -20,12 +20,14 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:layout_margin="8dp"
+          android:id="@+id/fulardSenyeraSimple"
           />
       <com.alorma.foulards.view.senyera.FulardRibetDobleSenyera
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:layout_margin="8dp"
+          android:id="@+id/fulardSenyeraIntern"
           />
     </LinearLayout>
   </ScrollView>
