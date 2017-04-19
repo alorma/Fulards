@@ -12,8 +12,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.foulards.fragment.color.fulard.FulardDosColorsBaseColorSelectorFragment;
 import com.alorma.foulards.fragment.color.fulard.FulardSimpleBaseColorSelectorFragment;
+import com.alorma.foulards.fragment.color.ribet.RibetCuatreRibetsColorSelectorFragment;
 import com.alorma.foulards.fragment.color.ribet.RibetDosColorSelectorFragment;
+import com.alorma.foulards.fragment.color.ribet.RibetDosRibetsColorSelectorFragment;
 import com.alorma.foulards.fragment.color.ribet.RibetSimpleColorSelectorFragment;
+import com.alorma.foulards.fragment.color.ribet.RibetTresRibetsColorSelectorFragment;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
 import com.alorma.foulards.view.FulardFactory;
@@ -159,6 +162,15 @@ public class MainActivity extends AppCompatActivity {
       case dos_colors:
         showRibetDosColorsSelector();
         break;
+      case dos:
+        showRibetSimpleSelectorDosRibets();
+        break;
+      case tres:
+        showRibetSimpleSelectorTresRibets();
+        break;
+      case cuatre:
+        showRibetSimpleSelectorCuatreRibets();
+        break;
     }
   }
 
@@ -185,6 +197,123 @@ public class MainActivity extends AppCompatActivity {
       public void onRibetColorEsquerraSelector(FulardColor color) {
         customization.setRibetColor(0);
         customization.setRibetEsquerraColor(color.getColorInt());
+        applyCustom();
+      }
+    });
+    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+  }
+
+  private void showRibetSimpleSelectorDosRibets() {
+    RibetDosRibetsColorSelectorFragment fragment = new RibetDosRibetsColorSelectorFragment();
+    fragment.setCallback(new RibetDosRibetsColorSelectorFragment.Callback() {
+      @Override
+      public void onRibetInternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddleIntern(0);
+        customization.setRibetMiddleExtern(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetIntern(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetExternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddleIntern(0);
+        customization.setRibetMiddleExtern(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetExtern(color.getColorInt());
+        applyCustom();
+      }
+    });
+    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+  }
+
+  private void showRibetSimpleSelectorTresRibets() {
+    RibetTresRibetsColorSelectorFragment fragment = new RibetTresRibetsColorSelectorFragment();
+    fragment.setCallback(new RibetTresRibetsColorSelectorFragment.Callback() {
+      @Override
+      public void onRibetInternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddleIntern(0);
+        customization.setRibetMiddleExtern(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetIntern(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetExternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddleIntern(0);
+        customization.setRibetMiddleExtern(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetExtern(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetMiddleColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddleIntern(0);
+        customization.setRibetMiddleExtern(0);
+        customization.setRibetMiddle(color.getColorInt());
+        applyCustom();
+      }
+    });
+    getSupportFragmentManager().beginTransaction().replace(R.id.contentRibetColorsSelector, fragment).commit();
+  }
+
+  private void showRibetSimpleSelectorCuatreRibets() {
+    RibetCuatreRibetsColorSelectorFragment fragment = new RibetCuatreRibetsColorSelectorFragment();
+    fragment.setCallback(new RibetCuatreRibetsColorSelectorFragment.Callback() {
+      @Override
+      public void onRibetInternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetIntern(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetExternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetExtern(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetMiddleInternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetMiddleIntern(color.getColorInt());
+        applyCustom();
+      }
+
+      @Override
+      public void onRibetMiddleExternColorSelector(FulardColor color) {
+        customization.setRibetColor(0);
+        customization.setRibetEsquerraColor(0);
+        customization.setRibetDretaColor(0);
+        customization.setRibetMiddle(0);
+        customization.setRibetMiddleExtern(color.getColorInt());
         applyCustom();
       }
     });
