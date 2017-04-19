@@ -1,22 +1,27 @@
 package com.alorma.foulards;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.alorma.foulards.fragment.fulard.FoulardShapeSenyeraFragment;
 import com.alorma.foulards.fragment.fulard.FoulardShapeSquareFragment;
 import com.alorma.foulards.fragment.fulard.FoulardShapeTriangleDobleFragment;
 import com.alorma.foulards.fragment.fulard.FoulardShapeTriangleSimpleFragment;
+import com.alorma.foulards.fragment.fulard.FulardSelectorFragment;
 
-public class FoulardShapeSelectorActivity extends AppCompatActivity {
+public class FoulardShapeSelectorActivity extends AppCompatActivity implements FulardSelectorFragment.Callback {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_fulard_shapes);
+    ButterKnife.bind(this);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -64,9 +69,22 @@ public class FoulardShapeSelectorActivity extends AppCompatActivity {
     }
   }
 
-  private void setFragment(Fragment fragment) {
+  private void setFragment(FulardSelectorFragment fragment) {
+    fragment.setCallback(this);
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     ft.replace(R.id.content, fragment);
     ft.commit();
+  }
+
+  @Override
+  public void onFulardSelected(FulardType fulardType) {
+    Intent data = new Intent();
+    data.putExtra(Extras.EXTRA_FULARD_TYPE, fulardType);
+    setResult(RESULT_OK, data);
+    finish();
+  }
+
+  public class Extras {
+    public static final String EXTRA_FULARD_TYPE = "EXTRA_FULARD_TYPE";
   }
 }

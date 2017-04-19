@@ -27,6 +27,7 @@
       android:id="@+id/buttonShape"
       android:text="FORMA"
       />
+
   <Button
       android:layout_width="match_parent"
       android:layout_height="?actionBarSize"
@@ -35,4 +36,10 @@
       android:text="COLORS"
       />
 
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:id="@+id/fulardLayout"
+      android:layout_gravity="center"
+      />
 </LinearLayout>

@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import com.alorma.foulards.R;
 import com.alorma.foulards.view.Fulard;
 
-public class FoulardShapeTriangleDobleFragment extends Fragment {
+public class FoulardShapeTriangleDobleFragment extends FulardSelectorFragment {
 
   public static FoulardShapeTriangleDobleFragment newInstance() {
     return new FoulardShapeTriangleDobleFragment();
@@ -34,5 +34,11 @@ public class FoulardShapeTriangleDobleFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     ButterKnife.bind(this, view);
+
+    FulardClickListener onClickListener = new FulardClickListener();
+    fulardDosColorsSenseRibet.setOnClickListener(onClickListener);
+    fulardDosColorsAmbRibet.setOnClickListener(onClickListener);
+    fulardDosColorsAmbRibetDoble.setOnClickListener(onClickListener);
+    fulardSimpleAmbRibetDoble.setOnClickListener(onClickListener);
   }
 }

@@ -19,7 +19,7 @@ import com.alorma.foulards.view.simple.FulardSimple;
 
 public class FulardFactory {
 
-  public FulardFactory(Context context) {
+  public FulardFactory() {
 
   }
 
