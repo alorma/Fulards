@@ -28,18 +28,16 @@
       android:text="FORMA"
       />
 
-  <Button
-      android:layout_width="match_parent"
-      android:layout_height="?actionBarSize"
-      android:background="?selectableItemBackground"
-      android:id="@+id/buttonColor"
-      android:text="COLORS"
-      />
-
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="200dp"
       android:id="@+id/fulardLayout"
       android:layout_gravity="center"
+      />
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/contentColorsSelector"
       />
 </LinearLayout>

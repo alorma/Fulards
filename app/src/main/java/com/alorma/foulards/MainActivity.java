@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.fragment.FulardSimpleBaseColorSelectorFragment;
 import com.alorma.foulards.view.Fulard;
+import com.alorma.foulards.view.FulardCustomization;
 import com.alorma.foulards.view.FulardFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
   private static final int REQUEST_CODE_FULARD = 21;
 
   @BindView(R.id.buttonShape) View buttonShape;
-  @BindView(R.id.buttonColor) View buttonColor;
   @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
+  private Fulard fulard;
+
+  private FulardCustomization customization;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
     buttonShape.setOnClickListener(v -> showShape());
-    buttonColor.setOnClickListener(v -> showColors());
   }
 
   private void showShape() {
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void onFulardTypeSelected(FulardType fulardType) {
-    Fulard fulard = new FulardFactory().get(this, fulardType);
+    fulard = new FulardFactory().get(this, fulardType);
 
     int width = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
     int height = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
@@ -66,5 +69,29 @@ public class MainActivity extends AppCompatActivity {
     params.gravity = Gravity.CENTER;
 
     fulardLayout.addView(fulard, params);
+    if (customization != null) {
+      fulard.fill(customization);
+    }
+
+    showColorsSelectorFulard(fulardType);
+    int colorsRibet = fulardType.getRibet().getColors();
+  }
+
+  private void showColorsSelectorFulard(FulardType fulardType) {
+    FulardType.Base base = fulardType.getBase();
+
+    if (base == FulardType.Base.simple) {
+      FulardSimpleBaseColorSelectorFragment fragment = new FulardSimpleBaseColorSelectorFragment();
+      fragment.setCallback(this::onBaseSimpleColor);
+      getSupportFragmentManager().beginTransaction().replace(R.id.contentColorsSelector, fragment).commit();
+    }
+  }
+
+  private void onBaseSimpleColor(FulardColor color) {
+    if (fulard != null) {
+      customization = new FulardCustomization();
+      customization.setFulardColor(color.getColorInt());
+      fulard.fill(customization);
+    }
   }
 }

@@ -4,45 +4,26 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.R;
 import com.alorma.foulards.adapter.ColorsAdapter;
-import com.alorma.foulards.data.ColorsMap;
-import com.google.gson.Gson;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.util.Arrays;
 
 public class ColorSelectorFragment extends Fragment {
+
+  private Callback callback;
 
   @BindView(R.id.colorsRecycler) RecyclerView recyclerView;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Single.fromCallable(() -> getResources().openRawResource(R.raw.colors))
-        .map(this::readInputStream)
-        .map(colorsString -> new Gson().fromJson(colorsString, ColorsMap.class))
-        .subscribeOn(Schedulers.computation())
-        .observeOn(
-            AndroidSchedulers.mainThread())
-        .subscribe(this::showColors, throwable -> {
-
-        });
   }
 
   @Nullable
@@ -56,28 +37,38 @@ public class ColorSelectorFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     ButterKnife.bind(this, view);
+    showColors();
   }
 
-  private void showColors(ColorsMap colorsMap) {
+  private void showColors() {
     ColorsAdapter adapter = new ColorsAdapter(LayoutInflater.from(getContext()));
-    adapter.add(colorsMap);
+    adapter.setCallback(this::onColorSelected);
+    adapter.add(Arrays.asList(FulardColor.values()));
 
     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
     recyclerView.setAdapter(adapter);
   }
 
-  private String readInputStream(InputStream is) throws IOException {
-    Writer writer = new StringWriter();
-    char[] buffer = new char[1024];
-    try {
-      Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-      int n;
-      while ((n = reader.read(buffer)) != -1) {
-        writer.write(buffer, 0, n);
+  private void onColorSelected(FulardColor color) {
+    getCallback().onColorSelected(color);
+  }
+
+  public Callback getCallback() {
+    return callback != null ? callback : new ColorSelectorFragment.Callback.Null();
+  }
+
+  public void setCallback(ColorSelectorFragment.Callback callback) {
+    this.callback = callback;
+  }
+
+  public interface Callback {
+    void onColorSelected(FulardColor color);
+
+    class Null implements Callback {
+      @Override
+      public void onColorSelected(FulardColor color) {
+
       }
-    } finally {
-      is.close();
     }
-    return writer.toString();
   }
 }
