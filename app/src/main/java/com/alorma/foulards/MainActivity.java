@@ -93,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
     fulard.fill(customization);
 
     fulardSearch = new FulardSearch();
+
+    if (fulardType.getRibet() == FulardType.Ribet.senyera || fulardType.getRibet() == FulardType.Ribet.senyera_extern) {
+      fulardSearch.setSenyera(true);
+    }
+
     fulardSearch.setFulardType(fulardType);
 
     showColorsSelectorFulard(fulardType);
