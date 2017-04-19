@@ -14,7 +14,8 @@ public class FulardConfiguration implements Serializable {
   private FulardColor ribetEsquerraColor;
   private FulardColor ribetExtern;
   private FulardColor ribetMiddle;
-  private FulardColor ribetMiddleFulardColorern;
+  private FulardColor ribetIntern;
+  private FulardColor ribetMiddleIntern;
   private FulardColor ribetMiddleExtern;
   private FulardColor ribetFulardColorern;
   private boolean senyera;
@@ -25,8 +26,8 @@ public class FulardConfiguration implements Serializable {
 
   public FulardConfiguration(FulardType fulardType, FulardColor fulardColor, FulardColor fulardDretaColor,
       FulardColor fulardEsquerraColor, FulardColor ribetColor, FulardColor ribetDretaColor,
-      FulardColor ribetEsquerraColor, FulardColor ribetExtern, FulardColor ribetMiddle,
-      FulardColor ribetMiddleFulardColorern, FulardColor ribetMiddleExtern, FulardColor ribetFulardColorern, boolean senyera) {
+      FulardColor ribetEsquerraColor, FulardColor ribetExtern, FulardColor ribetMiddle, FulardColor ribetIntern,
+      FulardColor ribetMiddleIntern, FulardColor ribetMiddleExtern, FulardColor ribetFulardColorern, boolean senyera) {
     this.fulardType = fulardType;
     this.fulardColor = fulardColor;
     this.fulardDretaColor = fulardDretaColor;
@@ -36,7 +37,8 @@ public class FulardConfiguration implements Serializable {
     this.ribetEsquerraColor = ribetEsquerraColor;
     this.ribetExtern = ribetExtern;
     this.ribetMiddle = ribetMiddle;
-    this.ribetMiddleFulardColorern = ribetMiddleFulardColorern;
+    this.ribetIntern = ribetIntern;
+    this.ribetMiddleIntern = ribetMiddleIntern;
     this.ribetMiddleExtern = ribetMiddleExtern;
     this.ribetFulardColorern = ribetFulardColorern;
     this.senyera = senyera;
@@ -106,12 +108,12 @@ public class FulardConfiguration implements Serializable {
     this.ribetMiddle = ribetMiddle;
   }
 
-  public FulardColor getRibetMiddleFulardColorern() {
-    return ribetMiddleFulardColorern;
+  public FulardColor getRibetMiddleIntern() {
+    return ribetMiddleIntern;
   }
 
-  public void setRibetMiddleFulardColorern(FulardColor ribetMiddleFulardColorern) {
-    this.ribetMiddleFulardColorern = ribetMiddleFulardColorern;
+  public void setRibetMiddleIntern(FulardColor ribetMiddleIntern) {
+    this.ribetMiddleIntern = ribetMiddleIntern;
   }
 
   public FulardColor getRibetMiddleExtern() {
@@ -144,5 +146,13 @@ public class FulardConfiguration implements Serializable {
 
   public void setFulardType(FulardType fulardType) {
     this.fulardType = fulardType;
+  }
+
+  public FulardColor getRibetIntern() {
+    return ribetIntern;
+  }
+
+  public void setRibetIntern(FulardColor ribetIntern) {
+    this.ribetIntern = ribetIntern;
   }
 }

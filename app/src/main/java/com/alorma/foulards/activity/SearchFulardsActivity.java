@@ -82,6 +82,7 @@ public class SearchFulardsActivity extends AppCompatActivity {
         .observeOn(Schedulers.computation())
         .filter(entry -> search.getFulardType().equals(entry.getValue().getFulardType()))
         .filter(entry -> filterFulardColor(search, entry.getValue()))
+        .filter(entry -> filterRibetColor(search, entry.getValue()))
         .toList()
         .subscribe(o -> {
         }, Throwable::printStackTrace);
@@ -104,6 +105,59 @@ public class SearchFulardsActivity extends AppCompatActivity {
             value.getFulardDretaColor().equals(search.getFulardColorDreta());
       }
     }
+    return true;
+  }
+
+  private boolean filterRibetColor(FulardSearch search, FulardConfiguration value) {
+    if (FulardType.Ribet.none == search.getFulardType().getRibet()) {
+      return true;
+    } else if (FulardType.Ribet.un == search.getFulardType().getRibet() && search.getRibetColor() != null) {
+      return value.getRibetColor() != null && value.getRibetColor().equals(search.getRibetColor());
+    } else if (FulardType.Ribet.dos_colors == search.getFulardType().getRibet()) {
+      if (search.getRibetDretaColor() != null && search.getRibetEsquerraColor() != null) {
+        return value.getRibetEsquerraColor() != null &&
+            value.getRibetDretaColor() != null &&
+            value.getRibetEsquerraColor().equals(search.getRibetEsquerraColor()) &&
+            value.getRibetDretaColor().equals(search.getRibetDretaColor());
+      } else if (search.getRibetEsquerraColor() != null) {
+        return value.getRibetEsquerraColor() != null &&
+            value.getRibetEsquerraColor().equals(search.getRibetEsquerraColor());
+      } else if (search.getRibetDretaColor() != null) {
+        return value.getRibetDretaColor() != null &&
+            value.getRibetDretaColor().equals(search.getRibetDretaColor());
+      }
+    } else if (FulardType.Ribet.dos == search.getFulardType().getRibet() &&
+        search.getRibetExtern() != null &&
+        search.getRibetIntern() != null) {
+      return value.getRibetExtern() != null &&
+          value.getRibetIntern() != null &&
+          value.getRibetExtern().equals(search.getRibetExtern()) &&
+          value.getRibetIntern().equals(search.getRibetIntern());
+    } else if (FulardType.Ribet.tres == search.getFulardType().getRibet() &&
+        search.getRibetExtern() != null &&
+        search.getRibetMiddle() != null &&
+        search.getRibetIntern() != null) {
+      return value.getRibetExtern() != null &&
+          value.getRibetIntern() != null &&
+          value.getRibetMiddle() != null &&
+          value.getRibetExtern().equals(search.getRibetExtern()) &&
+          value.getRibetMiddle().equals(search.getRibetMiddle()) &&
+          value.getRibetIntern().equals(search.getRibetIntern());
+    } else if (FulardType.Ribet.tres == search.getFulardType().getRibet() &&
+        search.getRibetExtern() != null &&
+        search.getRibetMiddleIntern() != null &&
+        search.getRibetMiddleExtern() != null &&
+        search.getRibetIntern() != null) {
+      return value.getRibetExtern() != null &&
+          value.getRibetIntern() != null &&
+          value.getRibetMiddle() != null &&
+          value.getRibetMiddleExtern() != null &&
+          value.getRibetExtern().equals(search.getRibetExtern()) &&
+          value.getRibetMiddleIntern().equals(search.getRibetMiddleIntern()) &&
+          value.getRibetMiddleExtern().equals(search.getRibetMiddleExtern()) &&
+          value.getRibetIntern().equals(search.getRibetIntern());
+    }
+
     return true;
   }
 
