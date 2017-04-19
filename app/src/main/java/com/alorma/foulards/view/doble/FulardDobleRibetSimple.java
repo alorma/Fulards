@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
-import com.alorma.foulards.view.Fulard;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class FulardDobleRibetSimple extends FulardDoble {
   private Rect rect;
@@ -98,5 +98,19 @@ public class FulardDobleRibetSimple extends FulardDoble {
     path.close();
     canvas.drawPath(path, paintFulardDreta);
     path.reset();
+  }
+
+  @Override
+  public void fill(FulardCustomization customization) {
+    if (customization.getFulardDretaColor() != 0) {
+      paintFulardDreta.setColor(customization.getFulardDretaColor());
+    }
+    if (customization.getFulardEsquerraColor() != 0) {
+      paintFulardEsquerra.setColor(customization.getFulardEsquerraColor());
+    }
+    if (customization.getRibetColor() != 0) {
+      paintRibet.setColor(customization.getRibetColor());
+    }
+    invalidate();
   }
 }

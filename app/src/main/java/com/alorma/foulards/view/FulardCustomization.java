@@ -3,13 +3,13 @@ package com.alorma.foulards.view;
 public class FulardCustomization {
   private int fulardColor;
 
-  private int fulard1Color;
-  private int fulard2Color;
+  private int fulardDretaColor;
+  private int fulardEsquerraColor;
 
   private int ribetColor;
 
-  private int ribet1Color;
-  private int ribet2Color;
+  private int ribetDretaColor;
+  private int ribetEsquerraColor;
 
   private int ribetExtern;
   private int ribetMiddle;
@@ -27,20 +27,20 @@ public class FulardCustomization {
     this.fulardColor = fulardColor;
   }
 
-  public int getFulard1Color() {
-    return fulard1Color;
+  public int getFulardDretaColor() {
+    return fulardDretaColor;
   }
 
-  public void setFulard1Color(int fulard1Color) {
-    this.fulard1Color = fulard1Color;
+  public void setFulardDretaColor(int fulardDretaColor) {
+    this.fulardDretaColor = fulardDretaColor;
   }
 
-  public int getFulard2Color() {
-    return fulard2Color;
+  public int getFulardEsquerraColor() {
+    return fulardEsquerraColor;
   }
 
-  public void setFulard2Color(int fulard2Color) {
-    this.fulard2Color = fulard2Color;
+  public void setFulardEsquerraColor(int fulardEsquerraColor) {
+    this.fulardEsquerraColor = fulardEsquerraColor;
   }
 
   public int getRibetColor() {
@@ -51,20 +51,20 @@ public class FulardCustomization {
     this.ribetColor = ribetColor;
   }
 
-  public int getRibet1Color() {
-    return ribet1Color;
+  public int getRibetDretaColor() {
+    return ribetDretaColor;
   }
 
-  public void setRibet1Color(int ribet1Color) {
-    this.ribet1Color = ribet1Color;
+  public void setRibetDretaColor(int ribetDretaColor) {
+    this.ribetDretaColor = ribetDretaColor;
   }
 
-  public int getRibet2Color() {
-    return ribet2Color;
+  public int getRibetEsquerraColor() {
+    return ribetEsquerraColor;
   }
 
-  public void setRibet2Color(int ribet2Color) {
-    this.ribet2Color = ribet2Color;
+  public void setRibetEsquerraColor(int ribetEsquerraColor) {
+    this.ribetEsquerraColor = ribetEsquerraColor;
   }
 
   public int getRibetExtern() {

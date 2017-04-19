@@ -25,12 +25,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="8dp"
+            android:id="@+id/fulardDosColorsSenseRibet"
             />
         <com.alorma.foulards.view.doble.FulardDobleRibetSimple
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="8dp"
+            android:id="@+id/fulardDosColorsAmbRibet"
             />
       </LinearLayout>
       <LinearLayout
@@ -43,12 +45,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="8dp"
+            android:id="@+id/fulardDosColorsAmbRibetDoble"
             />
         <com.alorma.foulards.view.doble.FulardSimpleRibetDoble
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="8dp"
+            android:id="@+id/fulardSimpleAmbRibetDoble"
             />
       </LinearLayout>
     </LinearLayout>
