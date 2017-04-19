@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.fragment.FulardDosColorsBaseColorSelectorFragment;
 import com.alorma.foulards.fragment.FulardSimpleBaseColorSelectorFragment;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
@@ -68,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, height);
     params.gravity = Gravity.CENTER;
 
+    fulardLayout.removeAllViews();
     fulardLayout.addView(fulard, params);
     if (customization != null) {
       fulard.fill(customization);
     }
 
     showColorsSelectorFulard(fulardType);
-    int colorsRibet = fulardType.getRibet().getColors();
   }
 
   private void showColorsSelectorFulard(FulardType fulardType) {
@@ -84,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
       FulardSimpleBaseColorSelectorFragment fragment = new FulardSimpleBaseColorSelectorFragment();
       fragment.setCallback(this::onBaseSimpleColor);
       getSupportFragmentManager().beginTransaction().replace(R.id.contentColorsSelector, fragment).commit();
+    } else if (base == FulardType.Base.doble) {
+      FulardDosColorsBaseColorSelectorFragment fragment = new FulardDosColorsBaseColorSelectorFragment();
+      fragment.setCallback(new FulardDosColorsBaseColorSelectorFragment.Callback() {
+        @Override
+        public void onFulardBaseColorDretaSelector(FulardColor color) {
+          onBaseDretaColor(color);
+        }
+
+        @Override
+        public void onFulardBaseColorEsquerraSelector(FulardColor color) {
+          onBaseEsquerraColor(color);
+        }
+      });
+      getSupportFragmentManager().beginTransaction().replace(R.id.contentColorsSelector, fragment).commit();
     }
   }
 
@@ -91,6 +106,32 @@ public class MainActivity extends AppCompatActivity {
     if (fulard != null) {
       customization = new FulardCustomization();
       customization.setFulardColor(color.getColorInt());
+      fulard.fill(customization);
+    }
+  }
+
+  private void onBaseDretaColor(FulardColor color) {
+    if (fulard != null) {
+      int colorAux = 0;
+      if (customization != null) {
+        colorAux = customization.getFulardEsquerraColor();
+      }
+      customization = new FulardCustomization();
+      customization.setFulardDretaColor(color.getColorInt());
+      customization.setFulardEsquerraColor(colorAux);
+      fulard.fill(customization);
+    }
+  }
+
+  private void onBaseEsquerraColor(FulardColor color) {
+    if (fulard != null) {
+      int colorAux = 0;
+      if (customization != null) {
+        colorAux = customization.getFulardDretaColor();
+      }
+      customization = new FulardCustomization();
+      customization.setFulardEsquerraColor(color.getColorInt());
+      customization.setFulardDretaColor(colorAux);
       fulard.fill(customization);
     }
   }

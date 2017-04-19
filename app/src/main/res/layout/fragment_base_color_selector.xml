@@ -5,16 +5,10 @@
               android:layout_height="match_parent"
     >
 
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="16dp"
-      android:id="@+id/colorImage"
-      />
-
   <Button
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Seleccionar color"
+      android:text="Seleccionar color del fulard"
       android:id="@+id/colorSelector"
       android:background="?selectableItemBackground"
       />
