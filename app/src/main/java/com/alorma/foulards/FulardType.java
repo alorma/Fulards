@@ -17,35 +17,19 @@ public enum FulardType {
   fulard_14(Base.simple, Ribet.senyera_extern);
 
   public enum Base {
-    simple(1),
-    doble(2);
-
-    private int colors;
-
-    Base(int colors) {
-      this.colors = colors;
-    }
-
-    public int getColors() {
-      return colors;
-    }
+    simple,
+    doble;
   }
 
   public enum Ribet {
-    none(0),
-    un(1),
-    dos_colors(2),
-    dos(2),
-    tres(3),
-    cuatre(4),
-    senyera(0),
-    senyera_extern(1);
-
-    private int colors;
-
-    Ribet(int colors) {
-      this.colors = colors;
-    }
+    none,
+    un,
+    dos_colors,
+    dos,
+    tres,
+    cuatre,
+    senyera,
+    senyera_extern;
   }
 
   private final Base base;
@@ -69,4 +53,12 @@ public enum FulardType {
     return ribet;
   }
 
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("FulardType{");
+    sb.append("base=").append(base);
+    sb.append(", ribet=").append(ribet);
+    sb.append('}');
+    return sb.toString();
+  }
 }

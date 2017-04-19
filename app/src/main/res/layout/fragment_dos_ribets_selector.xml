@@ -8,7 +8,7 @@
   <Button
       android:layout_width="match_parent"
       android:layout_height="?actionBarSize"
-      android:background="?selectableItemBackground"
+
       android:text="Ribet intern"
       android:id="@+id/ribetInternSelector"
       />
@@ -16,7 +16,7 @@
   <Button
       android:layout_width="match_parent"
       android:layout_height="?actionBarSize"
-      android:background="?selectableItemBackground"
+
       android:text="Ribet extern"
       android:id="@+id/ribetExternSelector"
       />

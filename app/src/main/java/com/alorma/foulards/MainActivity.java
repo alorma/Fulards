@@ -9,8 +9,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.data.FulardSearch;
 import com.alorma.foulards.fragment.color.fulard.FulardDosColorsBaseColorSelectorFragment;
 import com.alorma.foulards.fragment.color.fulard.FulardSimpleBaseColorSelectorFragment;
 import com.alorma.foulards.fragment.color.ribet.RibetCuatreRibetsColorSelectorFragment;
@@ -28,10 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
   @BindView(R.id.buttonShape) View buttonShape;
   @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
+  @BindView(R.id.search_button) View searchButton;
+
   private Fulard fulard;
 
   private FulardCustomization customization;
   private Fragment ribetFragment;
+  private FulardSearch fulardSearch;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +44,19 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
+    fulardSearch = new FulardSearch();
     customization = new FulardCustomization();
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
     buttonShape.setOnClickListener(v -> showShape());
+
+    searchButton.setOnClickListener(v -> onSearchButtonClick());
+  }
+
+  private void onSearchButtonClick() {
+    Toast.makeText(this, "Search:" + fulardSearch, Toast.LENGTH_SHORT).show();
   }
 
   private void showShape() {
@@ -67,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
   private void onFulardTypeSelected(FulardType fulardType) {
     fulard = new FulardFactory().get(this, fulardType);
 
+    fulardSearch.setFulardType(fulardType);
+
     int width = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
     int height = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
 
@@ -79,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
     FulardCustomization customization = buildCustomization();
 
     fulard.fill(customization);
+
+    fulardSearch = new FulardSearch();
 
     showColorsSelectorFulard(fulardType);
     showColorsSelectorRibets(fulardType);
@@ -132,18 +148,26 @@ public class MainActivity extends AppCompatActivity {
     customization.setFulardDretaColor(0);
     customization.setFulardEsquerraColor(0);
 
+    fulardSearch.setFulardColor(color);
+
     applyCustom();
   }
 
   private void onBaseDretaColor(FulardColor color) {
     customization.setFulardColor(0);
     customization.setFulardDretaColor(color.getColorInt());
+
+    fulardSearch.setFulardColorDreta(color);
+
     applyCustom();
   }
 
   private void onBaseEsquerraColor(FulardColor color) {
     customization.setFulardColor(0);
     customization.setFulardEsquerraColor(color.getColorInt());
+
+    fulardSearch.setFulardColorEsquerra(color);
+
     applyCustom();
   }
 
@@ -197,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
     RibetSimpleColorSelectorFragment fragment = new RibetSimpleColorSelectorFragment();
     fragment.setCallback(color -> {
       customization.setRibetColor(color.getColorInt());
+      fulardSearch.setRibetColor(color);
       applyCustom();
     });
     setRibetFragment(fragment);
@@ -206,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
     RibetSimpleColorSelectorFragment fragment = new RibetSimpleColorSelectorFragment();
     fragment.setCallback(color -> {
       customization.setRibetExtern(color.getColorInt());
+      fulardSearch.setRibetExtern(color);
       applyCustom();
     });
     setRibetFragment(fragment);
@@ -218,6 +244,10 @@ public class MainActivity extends AppCompatActivity {
       public void onRibetColorDretaSelector(FulardColor color) {
         customization.setRibetColor(0);
         customization.setRibetDretaColor(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetDretaColor(color);
+
         applyCustom();
       }
 
@@ -225,6 +255,10 @@ public class MainActivity extends AppCompatActivity {
       public void onRibetColorEsquerraSelector(FulardColor color) {
         customization.setRibetColor(0);
         customization.setRibetEsquerraColor(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(color);
+
         applyCustom();
       }
     });
@@ -243,6 +277,10 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
         customization.setRibetIntern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetIntern(color);
+
         applyCustom();
       }
 
@@ -255,6 +293,15 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
         customization.setRibetExtern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddleIntern(null);
+        fulardSearch.setRibetMiddleExtern(null);
+        fulardSearch.setRibetMiddle(null);
+        fulardSearch.setRibetEsquerraColor(color);
+
         applyCustom();
       }
     });
@@ -273,6 +320,14 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
         customization.setRibetIntern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddleIntern(null);
+        fulardSearch.setRibetMiddleExtern(null);
+        fulardSearch.setRibetIntern(color);
+
         applyCustom();
       }
 
@@ -285,6 +340,14 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(0);
         customization.setRibetExtern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddleIntern(null);
+        fulardSearch.setRibetMiddleExtern(null);
+        fulardSearch.setRibetExtern(color);
+
         applyCustom();
       }
 
@@ -296,6 +359,14 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetMiddleIntern(0);
         customization.setRibetMiddleExtern(0);
         customization.setRibetMiddle(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddleIntern(null);
+        fulardSearch.setRibetMiddleExtern(null);
+        fulardSearch.setRibetMiddle(color);
+
         applyCustom();
       }
     });
@@ -312,6 +383,13 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
         customization.setRibetIntern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddle(null);
+        fulardSearch.setRibetIntern(color);
+
         applyCustom();
       }
 
@@ -322,6 +400,13 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
         customization.setRibetExtern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddle(null);
+        fulardSearch.setRibetExtern(color);
+
         applyCustom();
       }
 
@@ -332,6 +417,13 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
         customization.setRibetMiddleIntern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddle(null);
+        fulardSearch.setRibetMiddleIntern(color);
+
         applyCustom();
       }
 
@@ -342,6 +434,13 @@ public class MainActivity extends AppCompatActivity {
         customization.setRibetDretaColor(0);
         customization.setRibetMiddle(0);
         customization.setRibetMiddleExtern(color.getColorInt());
+
+        fulardSearch.setRibetColor(null);
+        fulardSearch.setRibetEsquerraColor(null);
+        fulardSearch.setRibetDretaColor(null);
+        fulardSearch.setRibetMiddle(null);
+        fulardSearch.setRibetMiddleExtern(color);
+
         applyCustom();
       }
     });
