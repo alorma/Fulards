@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.foulards.FulardColor;
@@ -33,6 +34,7 @@ public class FulardSearchBuilderActivity extends AppCompatActivity {
   @BindView(R.id.buttonShape) View buttonShape;
   @BindView(R.id.fulardLayout) ViewGroup fulardLayout;
   @BindView(R.id.search_button) View searchButton;
+  @BindDimen(R.dimen.fulard_selector_size) int dimenFulard;
 
   private Fulard fulard;
 
@@ -88,10 +90,7 @@ public class FulardSearchBuilderActivity extends AppCompatActivity {
   private void onFulardTypeSelected(FulardType fulardType) {
     fulard = new FulardFactory().get(this, fulardType);
 
-    int width = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
-    int height = getResources().getDimensionPixelOffset(R.dimen.fulard_selector_size);
-
-    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, height);
+    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(dimenFulard, dimenFulard);
     params.gravity = Gravity.CENTER;
 
     fulardLayout.removeAllViews();

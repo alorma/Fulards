@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alorma.foulards.activity.AddFulardActivity;
 import com.alorma.foulards.activity.FulardSearchBuilderActivity;
 import com.alorma.foulards.activity.SearchFulardsActivity;
 import com.alorma.foulards.data.FulardSearch;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
   private static final int REQUEST_CODE_FULARD = 21;
 
   @BindView(R.id.search) View buttonSearch;
+  @BindView(R.id.add) View buttonAdd;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +25,18 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    buttonSearch.setOnClickListener(v -> {
-      onSearchFulard();
-    });
+    buttonSearch.setOnClickListener(v -> onSearchFulard());
+    buttonAdd.setOnClickListener(v -> onAddFulard());
   }
 
   private void onSearchFulard() {
     Intent intent = new Intent(this, FulardSearchBuilderActivity.class);
     startActivityForResult(intent, REQUEST_CODE_FULARD);
+  }
+
+  private void onAddFulard() {
+    Intent intent = new Intent(this, AddFulardActivity.class);
+    startActivity(intent);
   }
 
   @Override
