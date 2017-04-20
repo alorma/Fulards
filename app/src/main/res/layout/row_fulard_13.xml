@@ -5,7 +5,7 @@
              xmlns:tools="http://schemas.android.com/tools"
     >
 
-  <com.alorma.foulards.view.simple.FulardRibetSenyera
+  <com.alorma.foulards.view.senyera.FulardRibetSenyera
       android:id="@+id/fulard"
       android:layout_width="150dp"
       android:layout_height="150dp"

@@ -5,7 +5,7 @@
              xmlns:tools="http://schemas.android.com/tools"
     >
 
-  <com.alorma.foulards.view.simple.FulardCuadratRibetDoble
+  <com.alorma.foulards.view.cuadrat.FulardCuadratRibetDoble
       android:id="@+id/fulard"
       android:layout_width="150dp"
       android:layout_height="150dp"
