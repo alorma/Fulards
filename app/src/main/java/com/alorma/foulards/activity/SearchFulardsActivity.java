@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.foulards.AgrupamentItemViewModel;
@@ -28,6 +30,7 @@ import io.reactivex.disposables.Disposable;
 public class SearchFulardsActivity extends AppCompatActivity {
 
   @BindView(R.id.recyclerView) RecyclerView recyclerView;
+  @BindView(R.id.fabAddAgrupament) FloatingActionButton fabAddAgrupament;
 
   private FirebaseDatabase database;
   private CompositeDisposable disposable;
@@ -74,13 +77,19 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
     Disposable subscribe = useCase.getAgrupaments(search)
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(this::showAgrupament, Throwable::printStackTrace);
+        .subscribe(this::showAgrupament, Throwable::printStackTrace,
+            this::onCompleteLoading);
 
     disposable.add(subscribe);
   }
 
   private void showAgrupament(AgrupamentItemViewModel agrupament) {
     agrupamentsAdapter.add(agrupament);
+  }
+
+  private void onCompleteLoading() {
+    fabAddAgrupament.setVisibility(View.VISIBLE);
+    fabAddAgrupament.show();
   }
 
   @Override
