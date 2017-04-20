@@ -89,7 +89,15 @@ public class SearchFulardsActivity extends AppCompatActivity {
 
   private void onCompleteLoading() {
     fabAddAgrupament.setVisibility(View.VISIBLE);
-    fabAddAgrupament.show();
+
+    fabAddAgrupament.setOnClickListener(v -> {
+      openAddFulardActivity();
+    });
+  }
+
+  private void openAddFulardActivity() {
+    Intent intent = new Intent(this, AddFulardActivity.class);
+    startActivity(intent);
   }
 
   @Override

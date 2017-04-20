@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    >
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/appBar"
+      >
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:id="@+id/toolbar"
+        />
+  </android.support.design.widget.AppBarLayout>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="LOGIN"
+      android:id="@+id/loginButton"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:id="@+id/userImage"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:id="@+id/userName"
+        android:gravity="center_vertical"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        />
+  </LinearLayout>
+</LinearLayout>
