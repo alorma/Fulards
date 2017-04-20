@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.foulards.R;
+import com.alorma.foulards.fragment.AddFulardFragment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -117,6 +118,13 @@ public class AddFulardActivity extends AppCompatActivity implements GoogleApiCli
     if (user.getPhotoUrl() != null) {
       Glide.with(this).load(user.getPhotoUrl()).into(userImage);
     }
+
+    showAddFragment();
+  }
+
+  private void showAddFragment() {
+    AddFulardFragment fragment = new AddFulardFragment();
+    getSupportFragmentManager().beginTransaction().replace(R.id.addFulardContent, fragment).commit();
   }
 
   private void updateNoUserUI() {
