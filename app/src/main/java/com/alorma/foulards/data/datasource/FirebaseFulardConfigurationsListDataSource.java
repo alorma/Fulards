@@ -1,8 +1,10 @@
 package com.alorma.foulards.data.datasource;
 
+import com.alorma.foulards.FulardColor;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.data.FulardConfiguration;
 import com.alorma.foulards.data.FulardSearch;
+import com.alorma.foulards.view.FulardCustomization;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +29,7 @@ public class FirebaseFulardConfigurationsListDataSource implements FulardConfigu
   }
 
   @Override
-  public Single<Map<String, FulardConfiguration>> getConfigurations(FulardSearch search) {
+  public Single<Map<String, FulardCustomization>> getConfigurations(FulardSearch search) {
     return Flowable.fromPublisher((Subscriber<? super Map.Entry<String, FulardConfiguration>> subscriber) -> {
       AsyncSubscription subscription = new AsyncSubscription();
       subscriber.onSubscribe(subscription);
@@ -41,10 +43,54 @@ public class FirebaseFulardConfigurationsListDataSource implements FulardConfigu
         .filter(entry -> search.getFulardType().equals(entry.getValue().getFulardType()))
         .filter(entry -> filterFulardColor(search, entry.getValue()))
         .filter(entry -> filterRibetColor(search, entry.getValue()))
+        .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), mapConfiguration(entry.getValue())))
         .reduce(new HashMap<>(), (map, entry) -> {
           map.put(entry.getKey(), entry.getValue());
           return map;
         });
+  }
+
+  private FulardCustomization mapConfiguration(FulardConfiguration value) {
+    FulardCustomization customization = new FulardCustomization();
+
+    if (value.getFulardType() != null) {
+      customization.setType(value.getFulardType());
+    }
+    if (value.getFulardColor() != null) {
+      customization.setFulardColor(value.getFulardColor().getColorInt());
+    }
+    if (value.getFulardDretaColor() != null) {
+      customization.setFulardDretaColor(value.getFulardDretaColor().getColorInt());
+    }
+    if (value.getFulardEsquerraColor() != null) {
+      customization.setFulardEsquerraColor(value.getFulardEsquerraColor().getColorInt());
+    }
+    if (value.getRibetColor() != null) {
+      customization.setRibetColor(value.getRibetColor().getColorInt());
+    }
+    if (value.getRibetDretaColor() != null) {
+      customization.setRibetDretaColor(value.getRibetDretaColor().getColorInt());
+    }
+    if (value.getRibetEsquerraColor() != null) {
+      customization.setRibetEsquerraColor(value.getRibetEsquerraColor().getColorInt());
+    }
+    if (value.getRibetExtern() != null) {
+      customization.setRibetExtern(value.getRibetExtern().getColorInt());
+    }
+    if (value.getRibetMiddle() != null) {
+      customization.setRibetMiddle(value.getRibetMiddle().getColorInt());
+    }
+    if (value.getRibetIntern() != null) {
+      customization.setRibetIntern(value.getRibetIntern().getColorInt());
+    }
+    if (value.getRibetMiddleIntern() != null) {
+      customization.setRibetMiddleIntern(value.getRibetMiddleIntern().getColorInt());
+    }
+    if (value.getRibetMiddleExtern() != null) {
+      customization.setRibetMiddleExtern(value.getRibetMiddleExtern().getColorInt());
+    }
+
+    return customization;
   }
 
   private boolean filterFulardColor(FulardSearch search, FulardConfiguration value) {

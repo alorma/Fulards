@@ -1,10 +1,10 @@
 package com.alorma.foulards.data.datasource;
 
-import com.alorma.foulards.data.FulardConfiguration;
 import com.alorma.foulards.data.FulardSearch;
+import com.alorma.foulards.view.FulardCustomization;
 import io.reactivex.Single;
 import java.util.Map;
 
 public interface FulardConfigurationsListDataSource {
-  Single<Map<String, FulardConfiguration>> getConfigurations(FulardSearch search);
+  Single<Map<String, FulardCustomization>> getConfigurations(FulardSearch search);
 }

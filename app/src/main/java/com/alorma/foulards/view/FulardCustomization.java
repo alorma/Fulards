@@ -1,5 +1,6 @@
 package com.alorma.foulards.view;
 
+import com.alorma.foulards.FulardType;
 import java.io.Serializable;
 
 public class FulardCustomization implements Serializable {
@@ -20,6 +21,7 @@ public class FulardCustomization implements Serializable {
   private int ribetIntern;
 
   private boolean senyera;
+  private FulardType type;
 
   public int getFulardColor() {
     return fulardColor;
@@ -115,5 +117,33 @@ public class FulardCustomization implements Serializable {
 
   public void setSenyera(boolean senyera) {
     this.senyera = senyera;
+  }
+
+  public void setType(FulardType type) {
+    this.type = type;
+  }
+
+  public FulardType getType() {
+    return type;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("FulardCustomization{");
+    sb.append("fulardColor=").append(fulardColor);
+    sb.append(", fulardDretaColor=").append(fulardDretaColor);
+    sb.append(", fulardEsquerraColor=").append(fulardEsquerraColor);
+    sb.append(", ribetColor=").append(ribetColor);
+    sb.append(", ribetDretaColor=").append(ribetDretaColor);
+    sb.append(", ribetEsquerraColor=").append(ribetEsquerraColor);
+    sb.append(", ribetExtern=").append(ribetExtern);
+    sb.append(", ribetMiddle=").append(ribetMiddle);
+    sb.append(", ribetMiddleIntern=").append(ribetMiddleIntern);
+    sb.append(", ribetMiddleExtern=").append(ribetMiddleExtern);
+    sb.append(", ribetIntern=").append(ribetIntern);
+    sb.append(", senyera=").append(senyera);
+    sb.append(", type=").append(type);
+    sb.append('}');
+    return sb.toString();
   }
 }

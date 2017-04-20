@@ -9,4 +9,12 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="Agrupament"/>
+
+  <style name="Agrupament.name" parent="TextAppearance.AppCompat.Large">
+    <item name="android:textColor">@color/colorAccent</item>
+    <item name="android:padding">16dp</item>
+  </style>
+
+
 </resources>

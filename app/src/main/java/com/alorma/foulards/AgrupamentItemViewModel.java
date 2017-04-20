@@ -1,11 +1,11 @@
 package com.alorma.foulards;
 
-import com.alorma.foulards.data.FulardConfiguration;
+import com.alorma.foulards.view.FulardCustomization;
 
 public class AgrupamentItemViewModel {
   private String name;
   private boolean verified;
-  private FulardConfiguration fulardConfiguration;
+  private FulardCustomization fulardCustomization;
 
   public String getName() {
     return name;
@@ -23,11 +23,11 @@ public class AgrupamentItemViewModel {
     this.verified = verified;
   }
 
-  public void setFulardConfiguration(FulardConfiguration fulardConfiguration) {
-    this.fulardConfiguration = fulardConfiguration;
+  public void setFulardCustomization(FulardCustomization fulardCustomization) {
+    this.fulardCustomization = fulardCustomization;
   }
 
-  public FulardConfiguration getFulardConfiguration() {
-    return fulardConfiguration;
+  public FulardCustomization getFulardCustomization() {
+    return fulardCustomization;
   }
 }

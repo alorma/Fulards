@@ -17,7 +17,6 @@ public class FulardConfiguration implements Serializable {
   private FulardColor ribetIntern;
   private FulardColor ribetMiddleIntern;
   private FulardColor ribetMiddleExtern;
-  private FulardColor ribetFulardColorern;
   private boolean senyera;
 
   public FulardConfiguration() {
@@ -27,7 +26,7 @@ public class FulardConfiguration implements Serializable {
   public FulardConfiguration(FulardType fulardType, FulardColor fulardColor, FulardColor fulardDretaColor,
       FulardColor fulardEsquerraColor, FulardColor ribetColor, FulardColor ribetDretaColor,
       FulardColor ribetEsquerraColor, FulardColor ribetExtern, FulardColor ribetMiddle, FulardColor ribetIntern,
-      FulardColor ribetMiddleIntern, FulardColor ribetMiddleExtern, FulardColor ribetFulardColorern, boolean senyera) {
+      FulardColor ribetMiddleIntern, FulardColor ribetMiddleExtern, boolean senyera) {
     this.fulardType = fulardType;
     this.fulardColor = fulardColor;
     this.fulardDretaColor = fulardDretaColor;
@@ -40,7 +39,6 @@ public class FulardConfiguration implements Serializable {
     this.ribetIntern = ribetIntern;
     this.ribetMiddleIntern = ribetMiddleIntern;
     this.ribetMiddleExtern = ribetMiddleExtern;
-    this.ribetFulardColorern = ribetFulardColorern;
     this.senyera = senyera;
   }
 
@@ -124,14 +122,6 @@ public class FulardConfiguration implements Serializable {
     this.ribetMiddleExtern = ribetMiddleExtern;
   }
 
-  public FulardColor getRibetFulardColorern() {
-    return ribetFulardColorern;
-  }
-
-  public void setRibetFulardColorern(FulardColor ribetFulardColorern) {
-    this.ribetFulardColorern = ribetFulardColorern;
-  }
-
   public boolean isSenyera() {
     return senyera;
   }
@@ -171,7 +161,6 @@ public class FulardConfiguration implements Serializable {
     sb.append(", ribetIntern=").append(ribetIntern);
     sb.append(", ribetMiddleIntern=").append(ribetMiddleIntern);
     sb.append(", ribetMiddleExtern=").append(ribetMiddleExtern);
-    sb.append(", ribetFulardColorern=").append(ribetFulardColorern);
     sb.append(", senyera=").append(senyera);
     sb.append('}');
     return sb.toString();

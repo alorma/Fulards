@@ -5,38 +5,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alorma.foulards.AgrupamentItemViewModel;
 import com.alorma.foulards.R;
-import com.alorma.foulards.data.Agrupament;
-import com.alorma.foulards.data.FulardConfiguration;
+import com.alorma.foulards.adapter.AgrupamentsAdapter;
 import com.alorma.foulards.data.FulardSearch;
+import com.alorma.foulards.data.datasource.AgrupamentsListDataSource;
 import com.alorma.foulards.data.datasource.FirebaseAgrupamentsListDataSource;
 import com.alorma.foulards.data.datasource.FirebaseFulardConfigurationsListDataSource;
+import com.alorma.foulards.data.datasource.FulardConfigurationsListDataSource;
+import com.alorma.foulards.data.usecase.LoadAgrupamentsUseCase;
 import com.alorma.foulards.view.FulardCustomization;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import io.reactivex.Flowable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import java.util.HashMap;
-import java.util.Map;
-import org.reactivestreams.Subscriber;
 
 public class SearchFulardsActivity extends AppCompatActivity {
 
-  @BindView(R.id.logger) TextView logger;
+  @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
   private FirebaseDatabase database;
   private CompositeDisposable disposable;
+  private AgrupamentsAdapter agrupamentsAdapter;
 
   public static Intent createIntent(Context context, FulardCustomization customization, FulardSearch search) {
     Intent intent = new Intent(context, SearchFulardsActivity.class);
@@ -63,85 +58,29 @@ public class SearchFulardsActivity extends AppCompatActivity {
       if (customization != null && search != null) {
         downloadFirbeaseDB(search);
       }
+
+      agrupamentsAdapter = new AgrupamentsAdapter(LayoutInflater.from(this));
+      recyclerView.setLayoutManager(new LinearLayoutManager(this));
+      recyclerView.setAdapter(agrupamentsAdapter);
     }
   }
 
   private void downloadFirbeaseDB(FulardSearch search) {
     database = FirebaseDatabase.getInstance();
-    Single<Map<String, Agrupament>> agrupaments = loadAgrupaments();
-    Single<Map<String, FulardConfiguration>> configurations = readFirebaseFulardsConfigurations(database, search);
 
-    Disposable subscribe = Single.zip(agrupaments, configurations, (agrupamentsEntries, configurationEntries) -> {
-      Map<String, AgrupamentItemViewModel> map = new HashMap<>();
+    AgrupamentsListDataSource agrupamentsListDataSource = new FirebaseAgrupamentsListDataSource(database);
+    FulardConfigurationsListDataSource configurationsListDataSource = new FirebaseFulardConfigurationsListDataSource(database);
+    LoadAgrupamentsUseCase useCase = new LoadAgrupamentsUseCase(agrupamentsListDataSource, configurationsListDataSource);
 
-      for (Map.Entry<String, Agrupament> entry : agrupamentsEntries.entrySet()) {
-        if (map.get(entry.getKey()) == null) {
-          map.put(entry.getKey(), new AgrupamentItemViewModel());
-        }
-        map.get(entry.getKey()).setName(entry.getValue().getName());
-        map.get(entry.getKey()).setVerified(entry.getValue().isVerified());
-      }
-
-      for (Map.Entry<String, FulardConfiguration> entry : configurationEntries.entrySet()) {
-        if (map.get(entry.getKey()) == null) {
-          map.put(entry.getKey(), new AgrupamentItemViewModel());
-        }
-        map.get(entry.getKey()).setFulardConfiguration(entry.getValue());
-      }
-      return map;
-    })
-        .subscribeOn(Schedulers.computation())
-        .map(Map::entrySet)
-        .toFlowable()
-        .flatMap(Flowable::fromIterable)
-        .map(Map.Entry::getValue)
-        .filter(entry -> entry.getName() != null)
-        .filter(entry -> entry.getFulardConfiguration() != null)
+    Disposable subscribe = useCase.getAgrupaments(search)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(this::showAgrupament, Throwable::printStackTrace);
 
     disposable.add(subscribe);
   }
 
-  private Single<Map<String, FulardConfiguration>> readFirebaseFulardsConfigurations(FirebaseDatabase database,
-      FulardSearch search) {
-    return new FirebaseFulardConfigurationsListDataSource(database).getConfigurations(search);
-  }
-
   private void showAgrupament(AgrupamentItemViewModel agrupament) {
-    logger.append(agrupament.getName());
-    logger.append("\n");
-    logger.append(String.valueOf(agrupament.isVerified()));
-    logger.append("\n");
-    logger.append(String.valueOf(agrupament.getFulardConfiguration()));
-    logger.append("\n");
-    logger.append("---");
-    logger.append("\n");
-  }
-
-  private Single<Map<String, Agrupament>> loadAgrupaments() {
-    return new FirebaseAgrupamentsListDataSource(database).getAgrupaments();
-  }
-
-  private void loadAgrupamentsFromFirebase(Subscriber<? super DataSnapshot> s, Disposable disposable) {
-    if (!disposable.isDisposed()) {
-      DatabaseReference agrupaments = database.getReference("agrupaments");
-      agrupaments.keepSynced(true);
-      agrupaments.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-          if (!disposable.isDisposed()) {
-            s.onNext(dataSnapshot);
-          }
-          s.onComplete();
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-          s.onError(databaseError.toException());
-        }
-      });
-    }
+    agrupamentsAdapter.add(agrupament);
   }
 
   @Override

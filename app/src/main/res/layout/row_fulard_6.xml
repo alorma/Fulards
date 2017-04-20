@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <com.alorma.foulards.view.simple.FulardDobleSenseRibet
+      android:id="@+id/fulard"
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:layout_weight="1"
+      android:layout_margin="8dp"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@id/agrupamentName"
+      android:layout_marginStart="160dp"
+      android:layout_marginLeft="160dp"
+      style="@style/Agrupament.name"
+      tools:text="AE PEQ"
+      />
+
+</FrameLayout>
