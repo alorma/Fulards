@@ -1,91 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.alorma.foulards.MainActivity"
     >
-
-  <ScrollView
+  <android.support.design.widget.AppBarLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_above="@+id/search_button"
-      android:paddingBottom="24dp"
+      android:layout_height="wrap_content"
       >
-    <LinearLayout
+
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.alorma.foulards.MainActivity"
-        android:orientation="vertical"
-        >
-
-      <android.support.design.widget.AppBarLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          >
-
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:id="@+id/toolbar"
-            />
-      </android.support.design.widget.AppBarLayout>
-
-      <Button
-          android:layout_width="match_parent"
-          android:layout_height="?actionBarSize"
-          android:id="@+id/buttonShape"
-          android:text="FORMA"
-          />
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="200dp"
-          android:id="@+id/fulardLayout"
-          android:layout_gravity="center"
-          />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Fulard:"
-          android:textStyle="bold"
-          android:textSize="18sp"
-          android:padding="8dp"
-          />
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/contentFulardColorsSelector"
-          />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Ribet:"
-          android:textStyle="bold"
-          android:textSize="18sp"
-          android:padding="8dp"
-          />
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/contentRibetColorsSelector"
-          />
-    </LinearLayout>
-  </ScrollView>
+        android:layout_height="?actionBarSize"
+        android:id="@+id/toolbar"
+        />
+  </android.support.design.widget.AppBarLayout>
 
   <Button
       android:layout_width="match_parent"
-      android:layout_height="?actionBarSize"
-      android:textColor="@color/white"
-      style="@style/Widget.AppCompat.Button.Colored"
-      android:layout_alignParentBottom="true"
-      android:text="buscar"
-      android:textStyle="bold"
-      android:id="@+id/search_button"
+      android:layout_height="wrap_content"
+      android:id="@+id/search"
+      android:text="Buscar fulard"
       />
-</RelativeLayout>
+</LinearLayout>

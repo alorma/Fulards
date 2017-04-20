@@ -20,6 +20,7 @@
     <activity android:name=".activity.FoulardShapeSelectorActivity"/>
     <activity android:name=".activity.SearchFulardsActivity"/>
     <activity android:name=".activity.AddFulardActivity"/>
+    <activity android:name=".activity.FulardSearchBuilderActivity"/>
   </application>
 
 </manifest>
