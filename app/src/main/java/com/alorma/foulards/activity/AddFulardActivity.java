@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import com.alorma.foulards.R;
 import com.alorma.foulards.data.Agrupament;
 import com.alorma.foulards.data.FulardSearch;
+import com.alorma.foulards.ui.drawable.AlphaPatternDrawable;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
 import com.alorma.foulards.view.FulardFactory;
@@ -55,6 +56,9 @@ public class AddFulardActivity extends AppCompatActivity implements GoogleApiCli
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_fulard);
     ButterKnife.bind(this);
+
+    int dimen = getResources().getDimensionPixelOffset(R.dimen.alpha_rectangle_dimen);
+    fulardLayout.setBackground(new AlphaPatternDrawable(dimen));
 
     selectorFulard.setOnClickListener(v -> onSelectFulard());
     // addFulard.setOnClickListener(v -> onAddFulard(search));

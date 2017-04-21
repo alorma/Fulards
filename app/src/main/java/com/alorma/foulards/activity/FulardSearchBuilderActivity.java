@@ -23,6 +23,7 @@ import com.alorma.foulards.fragment.color.ribet.RibetDosColorSelectorFragment;
 import com.alorma.foulards.fragment.color.ribet.RibetDosRibetsColorSelectorFragment;
 import com.alorma.foulards.fragment.color.ribet.RibetSimpleColorSelectorFragment;
 import com.alorma.foulards.fragment.color.ribet.RibetTresRibetsColorSelectorFragment;
+import com.alorma.foulards.ui.drawable.AlphaPatternDrawable;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
 import com.alorma.foulards.view.FulardFactory;
@@ -50,6 +51,10 @@ public class FulardSearchBuilderActivity extends AppCompatActivity {
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+
+
+    int dimen = getResources().getDimensionPixelOffset(R.dimen.alpha_rectangle_dimen);
+    fulardLayout.setBackground(new AlphaPatternDrawable(dimen));
 
     buttonShape.setOnClickListener(v -> showShape());
 

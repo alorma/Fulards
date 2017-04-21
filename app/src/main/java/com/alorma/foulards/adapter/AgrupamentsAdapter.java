@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import com.alorma.foulards.AgrupamentItemViewModel;
 import com.alorma.foulards.FulardType;
 import com.alorma.foulards.R;
+import com.alorma.foulards.ui.drawable.AlphaPatternDrawable;
 import com.alorma.foulards.view.Fulard;
 import com.alorma.foulards.view.FulardCustomization;
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class AgrupamentsAdapter extends RecyclerView.Adapter<AgrupamentsAdapter.
     if (holder.fulard != null) {
       holder.fulard.fill(fulardCustomization);
     }
-    if (holder.agrupamentName !=  null) {
+    if (holder.agrupamentName != null) {
       holder.agrupamentName.setText(model.getName());
     }
   }
@@ -148,6 +149,9 @@ public class AgrupamentsAdapter extends RecyclerView.Adapter<AgrupamentsAdapter.
     public Holder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
+
+      int dimen = fulard.getResources().getDimensionPixelOffset(R.dimen.alpha_rectangle_dimen);
+      fulard.setBackground(new AlphaPatternDrawable(dimen));
     }
   }
 }
